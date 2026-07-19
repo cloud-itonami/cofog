@@ -1,0 +1,14 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Capability",
+  "name": "Crypto Crime Reporting Capability (Japan/NPA)",
+  "description": "Capability to autonomously report cryptocurrency theft and fraud to the National Police Agency of Japan.",
+  "identifier": "cap-jp-npa-reporting",
+  "performer": [
+    {
+      "@type": "GovernmentOrganization",
+      "name": "National Police Agency (Cybercrime Division)",
+      "identifier": "etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-jp-npa-cyber"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Project",
+  "name": "NPA Japan Reporting Actor",
+  "description": "Autonomous actor for reporting cryptocurrency crimes to the National Police Agency of Japan.",
+  "identifier": "etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-jp-npa-cyber",
+  "status": "Development"
+}

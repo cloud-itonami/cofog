@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/10/6/0/housing",
+      "type": "dodaf:Capability",
+      "name": "Housing Support and Residential Stability Capability",
+      "description": "Functional capability for managing housing benefit verification, coordination of rental assistance, and residential stability monitoring. Classification: COFOG Division 10, Group 6, Class 0.",
+      "metadata": {
+        "cofogDivision": "10",
+        "cofogGroup": "6",
+        "cofogClass": "0",
+        "code": "cofog-1060"
+      }
+    }
+  ]
+}

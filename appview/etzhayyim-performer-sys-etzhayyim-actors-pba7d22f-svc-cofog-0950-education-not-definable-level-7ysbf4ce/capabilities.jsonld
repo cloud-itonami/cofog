@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/09/5/0/education-not-definable-level",
+      "type": "dodaf:Capability",
+      "name": "Lifelong Learning and Special Education Capability",
+      "description": "Functional capability for managing adult education, lifelong learning, and special education services. Classification: COFOG Division 09, Group 5, Class 0.",
+      "metadata": {
+        "cofogDivision": "09",
+        "cofogGroup": "5",
+        "cofogClass": "0",
+        "code": "cofog-0950"
+      }
+    }
+  ]
+}

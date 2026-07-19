@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/07/1/1/pharmaceutical-products",
+      "type": "dodaf:Capability",
+      "name": "Pharmaceutical Product Oversight and Safety Capability",
+      "description": "Functional capability for managing drug efficacy reviews, licensing authorizations, and pharmacovigilance. Classification: COFOG Division 07, Group 1, Class 1.",
+      "metadata": {
+        "cofogDivision": "07",
+        "cofogGroup": "1",
+        "cofogClass": "1",
+        "code": "cofog-0711"
+      }
+    }
+  ]
+}

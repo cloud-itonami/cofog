@@ -1,0 +1,20 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dct": "http://purl.org/dc/terms/",
+    "dodaf": "http://purl.org/dodaf#",
+    "id": "@id",
+    "type": "@type"
+  },
+  "@graph": [
+    {
+      "@id": "https://kyber-systems.etzhayyim.com/activities/social-insurance-enrollment-process",
+      "@type": "dodaf:OperationalActivity",
+      "dct:title": "Social Insurance Enrollment Process",
+      "dct:description": "The operational activity of enrolling new employees into social and health insurance schemes.",
+      "performedBy": [
+        "https://kyber-systems.etzhayyim.com/performers/etzhayyim-performer-svc-cofog-10-social-protection"
+      ]
+    }
+  ]
+}

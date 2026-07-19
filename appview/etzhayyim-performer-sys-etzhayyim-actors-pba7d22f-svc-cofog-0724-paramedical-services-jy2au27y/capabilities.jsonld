@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/07/2/4/paramedical-services",
+      "type": "dodaf:Capability",
+      "name": "Paramedical and Allied Health Oversight Capability",
+      "description": "Functional capability for managing allied health services, paramedical provider audits, and rehabilitation coordination. Classification: COFOG Division 07, Group 2, Class 4.",
+      "metadata": {
+        "cofogDivision": "07",
+        "cofogGroup": "2",
+        "cofogClass": "4",
+        "code": "cofog-0724"
+      }
+    }
+  ]
+}

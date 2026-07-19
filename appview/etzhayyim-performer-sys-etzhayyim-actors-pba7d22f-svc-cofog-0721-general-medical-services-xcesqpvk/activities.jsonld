@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/07/2/1/general-medical-services/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "General Outpatient Service Management Lifecycle",
+      "description": "The administrative process of auditing clinic facilities, coordinating primary care, and monitoring medical service quality.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/07/2/1/general-medical-services"
+    }
+  ]
+}

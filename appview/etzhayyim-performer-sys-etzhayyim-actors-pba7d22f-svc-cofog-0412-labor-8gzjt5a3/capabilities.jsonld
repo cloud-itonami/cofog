@@ -1,0 +1,19 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0412-labor-8gzjt5a3",
+      "type": "dodaf:Capability",
+      "name": "ai etzhayyim performer sys etzhayyim actors pba7d22f svc cofog 0412 labor 8gzjt5a3",
+      "description": "Service capability profile for etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0412-labor-8gzjt5a3."
+    }
+  ]
+}

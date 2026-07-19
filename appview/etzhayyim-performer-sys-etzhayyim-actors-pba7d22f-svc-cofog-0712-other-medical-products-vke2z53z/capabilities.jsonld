@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/07/1/2/other-medical-products",
+      "type": "dodaf:Capability",
+      "name": "Miscellaneous Medical Product Oversight Capability",
+      "description": "Functional capability for managing safety reviews, certifications, and monitoring of miscellaneous medical products. Classification: COFOG Division 07, Group 1, Class 2.",
+      "metadata": {
+        "cofogDivision": "07",
+        "cofogGroup": "1",
+        "cofogClass": "2",
+        "code": "cofog-0712"
+      }
+    }
+  ]
+}

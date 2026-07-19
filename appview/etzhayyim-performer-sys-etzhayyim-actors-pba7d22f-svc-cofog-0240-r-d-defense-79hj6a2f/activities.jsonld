@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/02/4/0/r-d-defense/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Advanced Military Technology Innovation Process",
+      "description": "The lifecycle process of defense innovation, spanning from conceptual research and experimental prototyping to rigorous system testing and evaluation.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/02/4/0/r-d-defense"
+    }
+  ]
+}

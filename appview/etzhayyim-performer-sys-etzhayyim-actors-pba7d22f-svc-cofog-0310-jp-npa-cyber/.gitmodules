@@ -1,0 +1,3 @@
+[submodule "performers/apps/etzhayyim-lawfirm"]
+	path = performers/apps/etzhayyim-lawfirm
+	url = https://github.com/etzhayyimcojp/etzhayyim-lawfirm

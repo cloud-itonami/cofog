@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/09/2/1/lower-secondary-education",
+      "type": "dodaf:Capability",
+      "name": "Lower-Secondary Education and Academic Standards Capability",
+      "description": "Functional capability for managing lower-secondary educational services, academic facility audits, and subject-specific standards. Classification: COFOG Division 09, Group 2, Class 1.",
+      "metadata": {
+        "cofogDivision": "09",
+        "cofogGroup": "2",
+        "cofogClass": "1",
+        "code": "cofog-0921"
+      }
+    }
+  ]
+}

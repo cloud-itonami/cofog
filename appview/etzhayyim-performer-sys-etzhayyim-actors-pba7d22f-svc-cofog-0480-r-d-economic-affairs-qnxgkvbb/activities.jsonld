@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/04/8/0/r-d-economic-affairs/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Economic Innovation Lifecycle",
+      "description": "The research and development process of defining innovation objectives, analyzing economic data, and evaluating policy models.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/04/8/0/r-d-economic-affairs"
+    }
+  ]
+}

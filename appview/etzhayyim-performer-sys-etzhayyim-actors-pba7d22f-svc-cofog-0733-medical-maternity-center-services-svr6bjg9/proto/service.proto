@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package cofog.0733;
+
+option go_package = "github.com/etzhayyimcojp/etzhayyim-kyber/performers/etzhayyim-services-cofog-0733-medical-maternity-center-services/proto;cofogproto";
+
+service COFOGService {
+  rpc ExecuteFunction(ExecuteFunctionRequest) returns (ExecuteFunctionResponse);
+  rpc GetFunctionStatus(GetFunctionStatusRequest) returns (GetFunctionStatusResponse);
+}
+
+message ExecuteFunctionRequest {
+  string function_id = 1;
+  string payload = 2;
+}
+
+message ExecuteFunctionResponse {
+  string function_id = 1;
+  string status = 2;
+  string result = 3;
+}
+
+message GetFunctionStatusRequest {
+  string entity_id = 1;
+}
+
+message GetFunctionStatusResponse {
+  string status = 1;
+  string last_updated = 2;
+}

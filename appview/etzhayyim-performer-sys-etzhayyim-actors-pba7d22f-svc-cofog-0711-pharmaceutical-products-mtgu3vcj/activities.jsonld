@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/07/1/1/pharmaceutical-products/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Pharmaceutical Licensing and Surveillance Lifecycle",
+      "description": "The administrative process of reviewing drug efficacy, coordinating marketing authorization, and monitoring side effects.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/07/1/1/pharmaceutical-products"
+    }
+  ]
+}

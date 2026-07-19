@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/06/2/0/community-development",
+      "type": "dodaf:Capability",
+      "name": "Community Development and Social Infrastructure Capability",
+      "description": "Functional capability for managing community development projects, local amenities, and demographic analysis. Classification: COFOG Division 06, Group 2, Class 0.",
+      "metadata": {
+        "cofogDivision": "06",
+        "cofogGroup": "2",
+        "cofogClass": "0",
+        "code": "cofog-0620"
+      }
+    }
+  ]
+}

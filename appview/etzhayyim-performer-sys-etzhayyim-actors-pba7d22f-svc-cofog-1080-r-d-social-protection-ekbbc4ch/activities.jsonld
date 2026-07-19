@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/10/8/0/r-d-social-protection/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Social Protection R&D Lifecycle",
+      "description": "The administrative process of planning research, simulating policy impact, and evaluating welfare model effectiveness.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/10/8/0/r-d-social-protection"
+    }
+  ]
+}

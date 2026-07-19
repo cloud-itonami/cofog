@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/09/4/1/first-stage-tertiary-education/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Undergraduate Education Management Lifecycle",
+      "description": "The administrative process of auditing university faculty, coordinating undergraduate programs, and monitoring alumni employment outcomes.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/09/4/1/first-stage-tertiary-education"
+    }
+  ]
+}

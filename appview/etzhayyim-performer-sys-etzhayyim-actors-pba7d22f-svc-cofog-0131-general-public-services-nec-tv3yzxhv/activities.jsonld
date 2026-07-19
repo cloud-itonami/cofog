@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/01/3/1/general-public-services-nec/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Miscellaneous Administrative Support Process",
+      "description": "Orchestration of unclassified and ancillary public services, ensuring administrative continuity for non-standard governmental tasks.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/01/3/1/general-public-services-nec"
+    }
+  ]
+}

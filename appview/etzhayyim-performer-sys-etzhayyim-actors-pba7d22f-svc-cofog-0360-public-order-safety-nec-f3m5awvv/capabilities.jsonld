@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/03/6/0/public-order-safety-nec",
+      "type": "dodaf:Capability",
+      "name": "Miscellaneous Public Order and Safety Capability",
+      "description": "Functional capability for managing unclassified public order services, multi-agency safety coordination, and regulatory oversight. Classification: COFOG Division 03, Group 6, Class 0.",
+      "metadata": {
+        "cofogDivision": "03",
+        "cofogGroup": "6",
+        "cofogClass": "0",
+        "code": "cofog-0360"
+      }
+    }
+  ]
+}

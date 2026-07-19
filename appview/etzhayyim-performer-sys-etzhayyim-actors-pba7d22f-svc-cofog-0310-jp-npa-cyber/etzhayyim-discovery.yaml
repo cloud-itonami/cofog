@@ -1,0 +1,27 @@
+apiVersion: metadata.etzhayyim.com/v1
+kind: AppDiscovery
+metadata:
+  name: etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-jp-npa-cyber
+  namespace: etzhayyim-infra-k8s-actors
+spec:
+  type: actor
+  frameworkVersion: "0.1.0"
+  description: "Japan NPA Cybercrime reporting agent - validates on-chain evidence, generates NPA reports, submits to NPA portal"
+  agent:
+    name: jp-npa-cyber-actor
+    grpcPort: 50051
+    httpPort: 8080
+    mcpPort: 8081
+  tools:
+    - name: validate_on_chain_evidence
+      description: "Validate on-chain cryptocurrency evidence for NPA reporting"
+    - name: generate_npa_document
+      description: "Generate an official Japanese NPA-format cryptocurrency crime report"
+    - name: submit_to_npa
+      description: "Submit a generated report document to the NPA Cybercrime Portal"
+    - name: crypto_report_workflow
+      description: "Execute the full crypto crime report workflow: validate -> generate -> submit"
+  scaling:
+    type: scale-to-zero
+    minReplicas: 0
+    maxReplicas: 5

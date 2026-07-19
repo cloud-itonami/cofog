@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/07/1/3/therapeutic-appliances-equipment",
+      "type": "dodaf:Capability",
+      "name": "Therapeutic Appliances and Equipment Oversight Capability",
+      "description": "Functional capability for managing technical safety reviews, medical calibrations, and maintenance of therapeutic devices. Classification: COFOG Division 07, Group 1, Class 3.",
+      "metadata": {
+        "cofogDivision": "07",
+        "cofogGroup": "1",
+        "cofogClass": "3",
+        "code": "cofog-0713"
+      }
+    }
+  ]
+}

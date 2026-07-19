@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/04/1/1/general-economic-commercial-labour-affairs/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Economic Policy and Labour Management Process",
+      "description": "The administrative process of analyzing economic data, drafting commercial regulations, and implementing development programs.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/04/1/1/general-economic-commercial-labour-affairs"
+    }
+  ]
+}

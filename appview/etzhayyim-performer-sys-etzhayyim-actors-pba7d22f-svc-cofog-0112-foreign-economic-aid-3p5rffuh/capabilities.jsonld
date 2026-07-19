@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/01/1/2/foreign-economic-aid",
+      "type": "dodaf:Capability",
+      "name": "Foreign Economic Aid Management",
+      "description": "Functional capability for managing international development cooperation, including grant allocation and fiscal coordination with foreign bodies. Classification: COFOG Division 01, Group 1, Class 2.",
+      "metadata": {
+        "cofogDivision": "01",
+        "cofogGroup": "1",
+        "cofogClass": "2",
+        "code": "cofog-0112"
+      }
+    }
+  ]
+}

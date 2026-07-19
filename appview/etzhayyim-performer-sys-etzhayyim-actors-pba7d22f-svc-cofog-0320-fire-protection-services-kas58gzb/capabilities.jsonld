@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/03/2/0/fire-protection-services",
+      "type": "dodaf:Capability",
+      "name": "Fire Protection and Emergency Response Capability",
+      "description": "Functional capability for fire suppression, technical rescue, and fire prevention services. Classification: COFOG Division 03, Group 2, Class 0.",
+      "metadata": {
+        "cofogDivision": "03",
+        "cofogGroup": "2",
+        "cofogClass": "0",
+        "code": "cofog-0320"
+      }
+    }
+  ]
+}

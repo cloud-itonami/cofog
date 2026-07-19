@@ -1,0 +1,65 @@
+{
+  "@context": "https://etzhayyim.com/ns/kotodama/v1",
+  "@id": "did:web:cofog.etzhayyim.com",
+  "accent": "#6366f1",
+  "component": {
+    "path": "component.wasm"
+  },
+  "convoSystemPrompt": "You are ai etzhayyim performer sys etzhayyim actors pba7d22f svc cofog 0650 r d housing community amenities agent. Ai Etzhayyim Performer Sys Etzhayyim Actors Pba7D22F Svc Cofog 0650 R D Housing Community Amenities — AI Agent. Respond helpfully in the users language.",
+  "duties": [
+    "勤労の義務"
+  ],
+  "governance": {
+    "classification": "official",
+    "complianceFrameworks": [
+      "cofog",
+      "gfs"
+    ],
+    "raci": "accountable"
+  },
+  "kpi": [
+    "credits の獲得"
+  ],
+  "name": "etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0650-r-d-housing-community-amenities-ebkbv5ep",
+  "nanoid": "ebkbv5ep",
+  "performerType": "system",
+  "profile": {
+    "agentType": "autonomous",
+    "capabilities": [
+      "domain-query",
+      "data-management"
+    ],
+    "description": "Ai Etzhayyim Performer Sys Etzhayyim Actors Pba7D22F Svc Cofog 0650 R D Housing Community Amenities — AI Agent",
+    "displayName": "Ai Etzhayyim Performer Sys Etzhayyim Actors Pba7D22F Svc Cofog 0650 R D Housing Community Amenities",
+    "isBot": true,
+    "operator": "etzhayyim.co.jp"
+  },
+  "project": "cofog",
+  "runtimeType": "worker",
+  "space": {
+    "channels": [
+      {
+        "default": true,
+        "kind": "public",
+        "name": "ebkbv5ep-feed"
+      }
+    ],
+    "joinRule": "public",
+    "name": "Ai Etzhayyim Performer Sys Etzhayyim Actors Pba7D22F Svc Cofog 0650 R D Housing Community Amenities"
+  },
+  "triggers": {
+    "subscribeRepos": {
+      "collections": [
+        "app.bsky.feed.post",
+        "app.bsky.feed.like",
+        "app.bsky.feed.repost",
+        "app.bsky.graph.follow",
+        "com.etzhayyim.apps.cofog.govFunction",
+        "com.etzhayyim.apps.cofog.budgetItem",
+        "com.etzhayyim.apps.cofog.program",
+        "com.etzhayyim.apps.cofog.policyUpdate"
+      ]
+    }
+  },
+  "uiType": "yoro"
+}

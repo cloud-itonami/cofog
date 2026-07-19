@@ -1,0 +1,49 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "performs": {
+      "@id": "dodaf:performs",
+      "@type": "@id"
+    },
+    "hasSubActivity": {
+      "@id": "dodaf:hasSubActivity",
+      "@type": "@id",
+      "@container": "@list"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/jpn-gov-budget-management",
+      "type": "dodaf:OperationalActivity",
+      "name": "Japan Government Budget Management Workflow",
+      "description": "Automated workflow for budget distribution and execution tracking (COFOG 01.1).",
+      "cofog": "01.1",
+      "hasSubActivity": [
+        {
+          "id": "https://kyber-services.etzhayyim.com/activities/budget-initial-distribution",
+          "type": "dodaf:OperationalActivity",
+          "name": "Initial Budget Distribution",
+          "description": "Allocating initial funds to L1-L3 services based on cabinet decision."
+        },
+        {
+          "id": "https://kyber-services.etzhayyim.com/activities/budget-expense-execution",
+          "type": "dodaf:OperationalActivity",
+          "name": "Budget Expense Execution",
+          "description": "Recording and verifying expenses from L3 divisions."
+        },
+        {
+          "id": "https://kyber-services.etzhayyim.com/activities/budget-variance-monitoring",
+          "type": "dodaf:OperationalActivity",
+          "name": "Budget Variance Monitoring",
+          "description": "Monitoring deviation from allocated budget and triggering alerts."
+        }
+      ]
+    }
+  ]
+}

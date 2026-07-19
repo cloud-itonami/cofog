@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/06/1/0/housing-development",
+      "type": "dodaf:Capability",
+      "name": "Housing Development and Urban Zoning Capability",
+      "description": "Functional capability for managing housing projects, urban zoning, and residential subsidies. Classification: COFOG Division 06, Group 1, Class 0.",
+      "metadata": {
+        "cofogDivision": "06",
+        "cofogGroup": "1",
+        "cofogClass": "0",
+        "code": "cofog-0610"
+      }
+    }
+  ]
+}

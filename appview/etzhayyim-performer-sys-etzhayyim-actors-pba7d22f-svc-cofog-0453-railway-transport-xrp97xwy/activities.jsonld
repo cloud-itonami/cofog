@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/04/5/3/railway-transport/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Railway Transport and Safety Management Lifecycle",
+      "description": "The operational process of planning rail infrastructure, coordinating safety signaling, and monitoring transport services.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/04/5/3/railway-transport"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/10/9/0/social-protection-nec",
+      "type": "dodaf:Capability",
+      "name": "Ancillary Social Protection and Oversight Capability",
+      "description": "Functional capability for managing miscellaneous social protection requests, ancillary policy coordination, and regulatory oversight. Classification: COFOG Division 10, Group 9, Class 0.",
+      "metadata": {
+        "cofogDivision": "10",
+        "cofogGroup": "9",
+        "cofogClass": "0",
+        "code": "cofog-1090"
+      }
+    }
+  ]
+}

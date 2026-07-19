@@ -1,0 +1,16 @@
+{
+  "name": "cofog-0111-executive-component",
+  "version": "1.0.0",
+  "description": "COFOG component (TS-native migration)",
+  "main": "src/app.ts",
+  "scripts": {
+    "test": "echo \"no tests\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@etzhayyim/kotodama-host-sdk": "workspace:*"
+  }
+}

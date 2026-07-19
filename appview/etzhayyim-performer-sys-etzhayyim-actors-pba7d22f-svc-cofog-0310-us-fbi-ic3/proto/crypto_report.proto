@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package crypto_report.v1;
+
+option go_package = "github.com/etzhayyimcojp/etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-us-fbi-ic3/proto;cryptoreportpb";
+
+service CryptoReportService {
+  rpc ReportIncident(ReportIncidentRequest) returns (ReportIncidentResponse);
+  rpc GetReportStatus(GetReportStatusRequest) returns (GetReportStatusResponse);
+}
+
+message ReportIncidentRequest {
+  string victim_id = 1;
+  string incident_type = 2;
+  string attacker_address = 3;
+  string amount = 4;
+  string platform = 5;
+  string description = 6;
+  string country = 7;
+}
+
+message ReportIncidentResponse {
+  string case_id = 1;
+  string status = 2;
+}
+
+message GetReportStatusRequest {
+  string case_id = 1;
+}
+
+message GetReportStatusResponse {
+  string case_id = 1;
+  string status = 2;
+  string fbi_confirmation_number = 3;
+}

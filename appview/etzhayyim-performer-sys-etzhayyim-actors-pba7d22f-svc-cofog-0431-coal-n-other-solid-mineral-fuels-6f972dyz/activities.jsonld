@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/04/3/1/coal-and-other-solid-mineral-fuels/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Solid Fuel Resource Management Lifecycle",
+      "description": "The administrative process of surveying mineral deposits, processing extraction permits, and monitoring mining compliance.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/04/3/1/coal-and-other-solid-mineral-fuels"
+    }
+  ]
+}

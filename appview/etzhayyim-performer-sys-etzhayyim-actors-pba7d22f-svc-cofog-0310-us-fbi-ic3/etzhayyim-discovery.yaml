@@ -1,0 +1,27 @@
+apiVersion: metadata.etzhayyim.com/v1
+kind: AppDiscovery
+metadata:
+  name: etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-us-fbi-ic3
+  namespace: etzhayyim-infra-k8s-actors
+spec:
+  type: actor
+  frameworkVersion: "0.1.0"
+  description: "US FBI IC3 Cybercrime reporting agent - validates on-chain evidence, generates FBI IC3 reports, submits to FBI IC3 portal"
+  agent:
+    name: us-fbi-ic3-actor
+    grpcPort: 50051
+    httpPort: 8080
+    mcpPort: 8081
+  tools:
+    - name: validate_evidence
+      description: "Validate on-chain cryptocurrency evidence for FBI IC3 reporting"
+    - name: generate_fbi_report
+      description: "Generate an official FBI IC3-format cryptocurrency crime report"
+    - name: submit_to_fbi
+      description: "Submit a generated report document to the FBI Internet Crime Complaint Center"
+    - name: crypto_report_workflow
+      description: "Execute the full crypto crime report workflow: validate -> generate -> submit"
+  scaling:
+    type: scale-to-zero
+    minReplicas: 0
+    maxReplicas: 5

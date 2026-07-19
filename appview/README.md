@@ -1,0 +1,113 @@
+# etzhayyim-project-cofog App migration
+
+このディレクトリは `legacy-runtime` 実装を残したまま、App 版を段階移行するための配置先です。
+
+## 対象 App services
+
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-01-1-gov-budget-management-bm8l9m0n`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0111-executive-legislative-4pjejbgz`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0112-foreign-economic-aid-3p5rffuh`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0113-general-services-xzv5cc28`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0121-r-d-general-public-services-3x6dqmcq`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0131-general-public-services-nec-tv3yzxhv`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0141-public-debt-transactions-mrtk9z47`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0151-transfers-general-character-arxdb8en`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0210-military-defense-xg4uatgz`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0220-civil-defense-aevbmpkh`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0230-foreign-military-aid-2jrh7d5a`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0240-r-d-defense-79hj6a2f`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0250-defense-nec-rqfwg4xn`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-de-bka-cyber`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-jp-npa-cyber`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-police-services-h3pn2rnx`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-uk-action-fraud`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-us-fbi-ic3`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0320-fire-protection-services-kas58gzb`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0330-law-courts-4n3rgec4`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0340-prisons-5muk6vy2`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0350-r-d-public-order-safety-ruzg4r8t`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0360-public-order-safety-nec-f3m5awvv`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0411-general-economic-commercial-labou-6pbfr2g7`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0412-labor-8gzjt5a3`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0421-agriculture-8s8wm9jw`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0422-forestry-pxpd5xja`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0423-fishing-and-hunting-s54jmubm`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0431-coal-n-other-solid-mineral-fuels-6f972dyz`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0432-petroleum-and-natural-gas-nun7me5d`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0433-nuclear-fuel-mtkjvhs7`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0434-other-fuels-z97x5jgb`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0435-electricity-6842pjbd`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0436-non-fuel-mining-n-mineral-resourc-fegh66gt`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0441-manufacturing-msj6fchc`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0442-construction-7ym53a6e`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0451-road-transport-e387qkxc`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0452-water-transport-skqjmps4`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0453-railway-transport-xrp97xwy`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0454-air-transport-3z5a5p8p`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0455-pipeline-and-other-transport-ft56f6ga`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0460-communication-frm8c57p`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0471-distributive-trades-storage-wareh-hfg8prgw`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0472-hotels-and-restaurants-yahkg2fj`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0473-tourism-4wguabk9`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0474-multipurpose-development-projects-ennpdwbg`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0480-r-d-economic-affairs-qnxgkvbb`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0490-economic-affairs-nec-vhja2t5m`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0510-waste-management-ctcw4sg3`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0520-wastewater-management-4butqzx9`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0530-pollution-abatement-x549up56`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0540-protection-biodiversity-landscape-wxzztdyj`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0550-r-d-environmental-protection-p5unzqp2`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0560-environmental-protection-nec-tzdd9w8j`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0610-housing-development-56ncgmfx`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0620-community-development-zdfj9gqn`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0630-water-supply-npjnx57t`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0640-street-lighting-mcpurwd8`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0650-r-d-housing-community-amenities-ebkbv5ep`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0660-housing-community-amenities-nec-8utm6s9h`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0711-pharmaceutical-products-mtgu3vcj`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0712-other-medical-products-vke2z53z`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0713-therapeutic-appliances-equipment-jm2wr7ss`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0721-general-medical-services-xcesqpvk`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0722-specialized-medical-services-6unfrr6p`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0723-dental-services-9nwf5344`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0724-paramedical-services-jy2au27y`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0731-hospital-services-xcbpyu7s`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0732-specialized-hospital-services-b3hha5fm`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0733-medical-maternity-center-services-svr6bjg9`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0734-nurse-convalescent-home-svcs-tyeuc5yy`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0740-public-health-services-eyghgbr7`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0750-r-d-health-bwv847zg`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0760-health-nec-erpmpaqk`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0810-recreational-sporting-services-tmx7p8mh`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0820-cultural-services-bxbgf49g`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0830-broadcasting-publishing-services-fnjubghm`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0840-religious-community-services-6cunxtax`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0850-r-d-recreation-culture-religion-s7znjejv`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0860-recreation-culture-religion-nec-378sq693`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0911-pre-primary-primary-education-ca44cdek`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0921-lower-secondary-education-k32dpdwp`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0922-upper-secondary-education-2yjbt4pj`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0930-post-secondary-non-tertiary-edu-e8a28375`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0941-first-stage-tertiary-education-heu2znrb`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0942-second-stage-tertiary-education-p36uutm4`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0950-education-not-definable-level-7ysbf4ce`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0960-subsidiary-services-education-c4g5qara`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0970-r-d-education-k5najrbe`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0980-education-nec-qzxr6vh4`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-10-social-protection-tjd374a3`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1011-sickness-zmpmzkkz`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1012-disability-fp2ju2cp`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1020-senior-support-f7e9s9c2`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1030-survivors-ny9858qq`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1040-family-and-children-y4xjwscv`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1050-unemployment-aqp4mznu`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1060-housing-chuyndyq`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1070-social-exclusion-nec-ndeg2nx3`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1080-r-d-social-protection-ekbbc4ch`
+- `etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-1090-social-protection-nec-fn67298a`
+
+## App 実装方針
+
+- 各 service は `projects/*/wasm/*-component` として順次実装。
+- 既存 App runtime は互換運用のため維持。
+- HTTP/cron/job エンドポイントから優先して移植。

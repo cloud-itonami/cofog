@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/07/3/3/medical-maternity-center-services",
+      "type": "dodaf:Capability",
+      "name": "Maternity and Child Health Center Oversight Capability",
+      "description": "Functional capability for managing maternity, obstetric, and neonatal services and center safety standards. Classification: COFOG Division 07, Group 3, Class 3.",
+      "metadata": {
+        "cofogDivision": "07",
+        "cofogGroup": "3",
+        "cofogClass": "3",
+        "code": "cofog-0733"
+      }
+    }
+  ]
+}

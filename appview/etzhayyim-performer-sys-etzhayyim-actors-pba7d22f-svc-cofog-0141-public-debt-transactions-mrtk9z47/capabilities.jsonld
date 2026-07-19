@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/01/4/1/public-debt-transactions",
+      "type": "dodaf:Capability",
+      "name": "Public Debt Administration",
+      "description": "Functional capability for managing public debt transactions, including bond issuance, interest servicing, and fiscal sustainability monitoring. Classification: COFOG Division 01, Group 4, Class 1.",
+      "metadata": {
+        "cofogDivision": "01",
+        "cofogGroup": "4",
+        "cofogClass": "1",
+        "code": "cofog-0141"
+      }
+    }
+  ]
+}

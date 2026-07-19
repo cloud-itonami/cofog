@@ -1,0 +1,8 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Project",
+  "name": "FBI IC3 Reporting Actor",
+  "description": "Autonomous actor for reporting cryptocurrency crimes to the FBI's Internet Crime Complaint Center (IC3).",
+  "identifier": "etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-us-fbi-ic3",
+  "status": "Development"
+}

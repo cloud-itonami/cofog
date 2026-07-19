@@ -1,0 +1,27 @@
+apiVersion: metadata.etzhayyim.com/v1
+kind: AppDiscovery
+metadata:
+  name: etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-uk-action-fraud
+  namespace: etzhayyim-infra-k8s-actors
+spec:
+  type: actor
+  frameworkVersion: "0.1.0"
+  description: "UK Action Fraud Cybercrime reporting agent - gathers intelligence, generates Action Fraud reports, submits to Action Fraud portal"
+  agent:
+    name: uk-action-fraud-actor
+    grpcPort: 50051
+    httpPort: 8080
+    mcpPort: 8081
+  tools:
+    - name: gather_uk_intelligence
+      description: "Gather intelligence on cryptocurrency fraud for UK Action Fraud reporting"
+    - name: generate_ukaf_document
+      description: "Generate an official UK Action Fraud cryptocurrency crime report"
+    - name: submit_to_action_fraud
+      description: "Submit a generated report document to the UK Action Fraud portal"
+    - name: crypto_report_workflow
+      description: "Execute the full crypto crime report workflow: gather -> generate -> submit"
+  scaling:
+    type: scale-to-zero
+    minReplicas: 0
+    maxReplicas: 5

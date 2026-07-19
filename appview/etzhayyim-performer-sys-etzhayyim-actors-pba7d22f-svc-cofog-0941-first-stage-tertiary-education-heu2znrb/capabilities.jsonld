@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/09/4/1/first-stage-tertiary-education",
+      "type": "dodaf:Capability",
+      "name": "Undergraduate Education and Academic Accreditation Capability",
+      "description": "Functional capability for managing first-stage tertiary services, academic accreditation, and alumni employment monitoring. Classification: COFOG Division 09, Group 4, Class 1.",
+      "metadata": {
+        "cofogDivision": "09",
+        "cofogGroup": "4",
+        "cofogClass": "1",
+        "code": "cofog-0941"
+      }
+    }
+  ]
+}

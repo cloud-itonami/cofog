@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:etzhayyimcojp/etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0810-recreational-sporting-services-tmx7p8mh.git
+	branch = main
+	commit = da5522bda1df1a6002c1edec8f497c2c6765dc44
+	parent = cbc03bc58f360cb9831f9ffd97594c62b101c7dc
+	method = merge
+	cmdver = 0.4.9

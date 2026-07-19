@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/05/1/0/waste-management",
+      "type": "dodaf:Capability",
+      "name": "Waste Management and Resource Recovery Capability",
+      "description": "Functional capability for managing waste collection, recycling processes, and disposal compliance. Classification: COFOG Division 05, Group 1, Class 0.",
+      "metadata": {
+        "cofogDivision": "05",
+        "cofogGroup": "1",
+        "cofogClass": "0",
+        "code": "cofog-0510"
+      }
+    }
+  ]
+}

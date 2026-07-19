@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package cofog_nurse.v1;
+
+option go_package = "github.com/etzhayyimcojp/etzhayyim-kyber/performers/etzhayyim-performer-svc-cofog-nurse/pkg/gen";
+
+service NurseService {
+  rpc RegisterPatient(RegisterPatientRequest) returns (PatientRecord);
+  rpc LogVitals(LogVitalsRequest) returns (LogVitalsResponse);
+}
+
+message RegisterPatientRequest {
+  string name = 1;
+  int32 age = 2;
+}
+
+message PatientRecord {
+  string patient_id = 1;
+  string status = 2;
+}
+
+message LogVitalsRequest {
+  string patient_id = 1;
+  double temperature = 2;
+  string blood_pressure = 3;
+}
+
+message LogVitalsResponse {
+  bool success = 1;
+}

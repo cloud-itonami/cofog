@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/02/3/0/foreign-military-aid/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Military Aid Disbursement and Logistics Process",
+      "description": "The administrative and logistical process of reviewing aid requests, validating military specs, and coordinating the delivery of defense equipment to partner nations.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/02/3/0/foreign-military-aid"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/04/3/5/electricity",
+      "type": "dodaf:Capability",
+      "name": "Electricity Supply and Grid Management Capability",
+      "description": "Functional capability for managing electrical power generation, grid distribution, and energy safety standards. Classification: COFOG Division 04, Group 3, Class 5.",
+      "metadata": {
+        "cofogDivision": "04",
+        "cofogGroup": "3",
+        "cofogClass": "5",
+        "code": "cofog-0435"
+      }
+    }
+  ]
+}

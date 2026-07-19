@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/04/5/5/pipeline-and-other-transport",
+      "type": "dodaf:Capability",
+      "name": "Pipeline and Miscellaneous Transport Management Capability",
+      "description": "Functional capability for managing pipeline infrastructure, multi-modal transport links, and transport safety. Classification: COFOG Division 04, Group 5, Class 5.",
+      "metadata": {
+        "cofogDivision": "04",
+        "cofogGroup": "5",
+        "cofogClass": "5",
+        "code": "cofog-0455"
+      }
+    }
+  ]
+}

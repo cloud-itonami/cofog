@@ -1,0 +1,27 @@
+apiVersion: metadata.etzhayyim.com/v1
+kind: AppDiscovery
+metadata:
+  name: etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0310-de-bka-cyber
+  namespace: etzhayyim-infra-k8s-actors
+spec:
+  type: actor
+  frameworkVersion: "0.1.0"
+  description: "Germany BKA Cybercrime reporting agent - analyzes Kryptobetrug, generates BKA reports, submits to Bundeskriminalamt"
+  agent:
+    name: de-bka-cyber-actor
+    grpcPort: 50051
+    httpPort: 8080
+    mcpPort: 8081
+  tools:
+    - name: analyze_krypto_betrug
+      description: "Analyze crypto fraud (Kryptobetrug) evidence for BKA reporting"
+    - name: generate_bka_document
+      description: "Generate an official German BKA-format cryptocurrency crime report"
+    - name: submit_to_bka
+      description: "Submit a generated report document to the Bundeskriminalamt Cybercrime Portal"
+    - name: crypto_report_workflow
+      description: "Execute the full crypto crime report workflow: analyze -> generate -> submit"
+  scaling:
+    type: scale-to-zero
+    minReplicas: 0
+    maxReplicas: 5

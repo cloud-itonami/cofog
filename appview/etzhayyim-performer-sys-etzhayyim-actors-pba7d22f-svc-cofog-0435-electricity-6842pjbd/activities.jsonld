@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/04/3/5/electricity/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Electrical Power and Grid Lifecycle",
+      "description": "The operational process of monitoring grid load, coordinating power distribution, and enforcing safety standards.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/04/3/5/electricity"
+    }
+  ]
+}

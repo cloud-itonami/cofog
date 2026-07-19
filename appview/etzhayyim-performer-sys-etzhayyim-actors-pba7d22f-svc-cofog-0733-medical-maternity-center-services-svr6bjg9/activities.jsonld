@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/07/3/3/medical-maternity-center-services/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Maternity and Child Health Management Lifecycle",
+      "description": "The administrative process of auditing maternity centers, coordinating neonatal care, and monitoring health outcomes.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/07/3/3/medical-maternity-center-services"
+    }
+  ]
+}

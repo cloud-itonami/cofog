@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/04/1/1/general-economic-commercial-labour-affairs",
+      "type": "dodaf:Capability",
+      "name": "General Economic, Commercial and Labour Affairs Management",
+      "description": "Functional capability for managing general economic policies, commercial regulations, and labour market affairs. Classification: COFOG Division 04, Group 1, Class 1.",
+      "metadata": {
+        "cofogDivision": "04",
+        "cofogGroup": "1",
+        "cofogClass": "1",
+        "code": "cofog-0411"
+      }
+    }
+  ]
+}

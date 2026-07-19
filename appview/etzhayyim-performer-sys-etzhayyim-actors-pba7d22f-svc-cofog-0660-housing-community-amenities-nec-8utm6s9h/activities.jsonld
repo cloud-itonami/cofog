@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/06/6/0/housing-community-amenities-nec/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Ancillary Housing and Urban Orchestration Process",
+      "description": "The administrative process of managing miscellaneous housing requests, coordinating inter-agency urban policies, and executing regulatory oversight.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/06/6/0/housing-community-amenities-nec"
+    }
+  ]
+}

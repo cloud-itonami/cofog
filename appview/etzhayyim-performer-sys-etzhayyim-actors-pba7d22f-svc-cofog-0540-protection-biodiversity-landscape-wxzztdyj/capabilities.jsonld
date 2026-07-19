@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/05/4/0/protection-biodiversity-landscape",
+      "type": "dodaf:Capability",
+      "name": "Biodiversity Protection and Landscape Management Capability",
+      "description": "Functional capability for managing wildlife conservation, habitat surveys, and landscape restoration. Classification: COFOG Division 05, Group 4, Class 0.",
+      "metadata": {
+        "cofogDivision": "05",
+        "cofogGroup": "4",
+        "cofogClass": "0",
+        "code": "cofog-0540"
+      }
+    }
+  ]
+}

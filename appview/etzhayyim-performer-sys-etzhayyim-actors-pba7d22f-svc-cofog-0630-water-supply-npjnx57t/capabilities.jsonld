@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/06/3/0/water-supply",
+      "type": "dodaf:Capability",
+      "name": "Potable Water Supply and Quality Management Capability",
+      "description": "Functional capability for managing potable water collection, treatment, and distribution networks. Classification: COFOG Division 06, Group 3, Class 0.",
+      "metadata": {
+        "cofogDivision": "06",
+        "cofogGroup": "3",
+        "cofogClass": "0",
+        "code": "cofog-0630"
+      }
+    }
+  ]
+}

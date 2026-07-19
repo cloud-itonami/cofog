@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/09/2/2/upper-secondary-education",
+      "type": "dodaf:Capability",
+      "name": "Upper-Secondary Education and Vocational Pathway Capability",
+      "description": "Functional capability for managing upper-secondary academic and vocational services, graduation requirements, and career readiness. Classification: COFOG Division 09, Group 2, Class 2.",
+      "metadata": {
+        "cofogDivision": "09",
+        "cofogGroup": "2",
+        "cofogClass": "2",
+        "code": "cofog-0922"
+      }
+    }
+  ]
+}

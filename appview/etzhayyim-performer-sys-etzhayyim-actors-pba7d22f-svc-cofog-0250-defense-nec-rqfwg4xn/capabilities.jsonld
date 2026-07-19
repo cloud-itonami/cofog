@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/02/5/0/defense-nec",
+      "type": "dodaf:Capability",
+      "name": "defense-nec",
+      "description": "Defence n.e.c.. Classification: COFOG Division 02, Group 5, Class 0.",
+      "metadata": {
+        "cofogDivision": "02",
+        "cofogGroup": "5",
+        "cofogClass": "0",
+        "code": "cofog-0250"
+      }
+    }
+  ]
+}

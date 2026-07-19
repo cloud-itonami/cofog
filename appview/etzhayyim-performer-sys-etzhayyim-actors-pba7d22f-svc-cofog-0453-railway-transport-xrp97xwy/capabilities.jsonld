@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/04/5/3/railway-transport",
+      "type": "dodaf:Capability",
+      "name": "Railway Transport and Infrastructure Management Capability",
+      "description": "Functional capability for managing railway infrastructure, safety signaling, and rail transport services. Classification: COFOG Division 04, Group 5, Class 3.",
+      "metadata": {
+        "cofogDivision": "04",
+        "cofogGroup": "5",
+        "cofogClass": "3",
+        "code": "cofog-0453"
+      }
+    }
+  ]
+}

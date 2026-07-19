@@ -1,0 +1,65 @@
+{
+  "@context": "https://etzhayyim.com/ns/kotodama/v1",
+  "@id": "did:web:cofog.etzhayyim.com",
+  "accent": "#6366f1",
+  "component": {
+    "path": "component.wasm"
+  },
+  "convoSystemPrompt": "You are cofog 0121 r component agent. Cofog 0121 R Component — AI Agent. Respond helpfully in the users language.",
+  "duties": [
+    "勤労の義務"
+  ],
+  "governance": {
+    "classification": "official",
+    "complianceFrameworks": [
+      "cofog",
+      "gfs"
+    ],
+    "raci": "accountable"
+  },
+  "kpi": [
+    "credits の獲得"
+  ],
+  "name": "cofog-0121-r-component",
+  "nanoid": "a9048d06",
+  "performerType": "service",
+  "profile": {
+    "agentType": "autonomous",
+    "capabilities": [
+      "domain-query",
+      "data-management"
+    ],
+    "description": "Cofog 0121 R Component — AI Agent",
+    "displayName": "Cofog 0121 R Component",
+    "isBot": true,
+    "operator": "etzhayyim.co.jp"
+  },
+  "project": "cofog",
+  "runtimeType": "worker",
+  "space": {
+    "channels": [
+      {
+        "default": true,
+        "kind": "public",
+        "name": "9048d064-feed"
+      }
+    ],
+    "joinRule": "public",
+    "name": "Cofog 0121 R Component"
+  },
+  "triggers": {
+    "subscribeRepos": {
+      "collections": [
+        "app.bsky.feed.post",
+        "app.bsky.feed.like",
+        "app.bsky.feed.repost",
+        "app.bsky.graph.follow",
+        "com.etzhayyim.apps.cofog.govFunction",
+        "com.etzhayyim.apps.cofog.budgetItem",
+        "com.etzhayyim.apps.cofog.program",
+        "com.etzhayyim.apps.cofog.policyUpdate"
+      ]
+    }
+  },
+  "uiType": "yoro"
+}

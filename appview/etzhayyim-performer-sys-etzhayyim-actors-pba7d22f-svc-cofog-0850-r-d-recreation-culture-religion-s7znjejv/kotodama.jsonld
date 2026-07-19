@@ -1,0 +1,65 @@
+{
+  "@context": "https://etzhayyim.com/ns/kotodama/v1",
+  "@id": "did:web:cofog.etzhayyim.com",
+  "accent": "#6366f1",
+  "component": {
+    "path": "component.wasm"
+  },
+  "convoSystemPrompt": "You are the COFOG 0850 agent — an AI specialist in government R&D policy for recreation, culture, and religion. You help classify expenditures, analyze R&D programs in arts/heritage/sports/religious studies, and provide policy insights. Respond helpfully in the user's language.",
+  "duties": [
+    "勤労の義務"
+  ],
+  "governance": {
+    "classification": "official",
+    "complianceFrameworks": [
+      "cofog",
+      "gfs"
+    ],
+    "raci": "accountable"
+  },
+  "kpi": [
+    "credits の獲得"
+  ],
+  "name": "etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0850-r-d-recreation-culture-religion-s7znjejv",
+  "nanoid": "s7znjejv",
+  "performerType": "system",
+  "profile": {
+    "agentType": "autonomous",
+    "capabilities": [
+      "domain-query",
+      "data-management"
+    ],
+    "description": "COFOG 0850 — R&D in Recreation, Culture and Religion. Government function classification agent for research and development policy in arts, heritage, sports, and interfaith studies.",
+    "displayName": "COFOG 0850: R&D Recreation, Culture & Religion",
+    "isBot": true,
+    "operator": "etzhayyim.co.jp"
+  },
+  "project": "cofog",
+  "runtimeType": "worker",
+  "space": {
+    "channels": [
+      {
+        "default": true,
+        "kind": "public",
+        "name": "s7znjejv-feed"
+      }
+    ],
+    "joinRule": "public",
+    "name": "COFOG 0850: R&D Recreation, Culture & Religion"
+  },
+  "triggers": {
+    "subscribeRepos": {
+      "collections": [
+        "app.bsky.feed.post",
+        "app.bsky.feed.like",
+        "app.bsky.feed.repost",
+        "app.bsky.graph.follow",
+        "com.etzhayyim.apps.cofog.govFunction",
+        "com.etzhayyim.apps.cofog.budgetItem",
+        "com.etzhayyim.apps.cofog.program",
+        "com.etzhayyim.apps.cofog.policyUpdate"
+      ]
+    }
+  },
+  "uiType": "yoro"
+}

@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/08/4/0/religious-community-services",
+      "type": "dodaf:Capability",
+      "name": "Religious and Community Service Orchestration Capability",
+      "description": "Functional capability for managing religious facilities, community programs, and social impact analysis. Classification: COFOG Division 08, Group 4, Class 0.",
+      "metadata": {
+        "cofogDivision": "08",
+        "cofogGroup": "4",
+        "cofogClass": "0",
+        "code": "cofog-0840"
+      }
+    }
+  ]
+}

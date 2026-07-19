@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package com.etzhayyim.talent.v1;
+
+option go_package = "github.com/etzhayyimcojp/etzhayyim-kyber/performers/etzhayyim-services-cap-cofog-0412-labor/proto/v1;talentv1";
+
+import "google/protobuf/timestamp.proto";
+
+service TalentAcquisitionService {
+  // Recruitment & Sourcing (APQC 7.1.1)
+  rpc CreateRecruitmentPlan(CreateRecruitmentPlanRequest) returns (CreateRecruitmentPlanResponse);
+  
+  // Selection (APQC 7.1.2)
+  rpc EvaluateCandidate(EvaluateCandidateRequest) returns (EvaluateCandidateResponse);
+
+  // Skill Matching (ESCO/ISIC)
+  rpc MatchTalent(MatchTalentRequest) returns (MatchTalentResponse);
+}
+
+message CreateRecruitmentPlanRequest {
+  string job_title = 1;
+  string isic_code = 2;
+  repeated string required_esco_skills = 3;
+}
+
+message CreateRecruitmentPlanResponse {
+  string plan_id = 1;
+}
+
+message EvaluateCandidateRequest {
+  string candidate_id = 1;
+  string plan_id = 2;
+}
+
+message EvaluateCandidateResponse {
+  float score = 1;
+  string feedback = 2;
+}
+
+message MatchTalentRequest {
+  string isic_code = 1;
+  repeated string esco_skills = 2;
+}
+
+message MatchTalentResponse {
+  repeated TalentMatch matches = 1;
+}
+
+message TalentMatch {
+  string performer_id = 1;
+  float match_score = 2;
+}
+

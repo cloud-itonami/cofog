@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description",
+    "realizes": {
+      "@id": "dodaf:realizes",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/activities/cofog/03/2/0/fire-protection-services/main-process",
+      "type": "dodaf:OperationalActivity",
+      "name": "Fire Suppression and Rescue Lifecycle",
+      "description": "The operational process of dispatching fire units, executing rescue missions, and conducting post-incident fire investigations.",
+      "realizes": "https://kyber-services.etzhayyim.com/capabilities/cofog/03/2/0/fire-protection-services"
+    }
+  ]
+}

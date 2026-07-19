@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/08/1/0/recreational-sporting-services",
+      "type": "dodaf:Capability",
+      "name": "Recreational and Sporting Infrastructure Capability",
+      "description": "Functional capability for managing sporting facilities, athletic grants, and public recreation events. Classification: COFOG Division 08, Group 1, Class 0.",
+      "metadata": {
+        "cofogDivision": "08",
+        "cofogGroup": "1",
+        "cofogClass": "0",
+        "code": "cofog-0810"
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "id": "@id",
+    "type": "@type",
+    "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#",
+    "dct": "http://purl.org/dc/terms/",
+    "name": "dct:title",
+    "description": "dct:description"
+  },
+  "@graph": [
+    {
+      "id": "https://kyber-services.etzhayyim.com/capabilities/cofog/07/6/0/health-nec",
+      "type": "dodaf:Capability",
+      "name": "Miscellaneous Health and Unclassified Medical Oversight Capability",
+      "description": "Functional capability for managing unclassified health services, multi-agency health coordination, and regulatory oversight. Classification: COFOG Division 07, Group 6, Class 0.",
+      "metadata": {
+        "cofogDivision": "07",
+        "cofogGroup": "6",
+        "cofogClass": "0",
+        "code": "cofog-0760"
+      }
+    }
+  ]
+}
