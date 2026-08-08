@@ -101,22 +101,24 @@
 
 (defn https-url? [value :string] :bool
   (if (>= (string-length value) 8)
-    (string=? (string-substring value 0 8) "https://")
+    (not (zero? (string=? (string-substring value 0 8) "https://")))
     false))
 
 (defn contains-prohibited-text? [value :string] :bool
   (let [text (string-fold-case value)]
-    (or (string-contains? text "trajectory")
-        (string-contains? text "intercept")
-        (string-contains? text "target coordinate")
-        (string-contains? text "weapon assignment")
-        (string-contains? text "launch site")
-        (string-contains? text "sensor track")
-        (string-contains? text "military unit")
-        (string-contains? text "friendly force")
-        (string-contains? text "person id")
-        (string-contains? text "device id")
-        (string-contains? text "user location"))))
+    (not
+     (zero?
+      (or (string-contains? text "trajectory")
+          (string-contains? text "intercept")
+          (string-contains? text "target coordinate")
+          (string-contains? text "weapon assignment")
+          (string-contains? text "launch site")
+          (string-contains? text "sensor track")
+          (string-contains? text "military unit")
+          (string-contains? text "friendly force")
+          (string-contains? text "person id")
+          (string-contains? text "device id")
+          (string-contains? text "user location"))))))
 
 (defn alert-kind? [kind :i64] :bool
   (or (= kind 1) (= kind 2)))

@@ -1,10 +1,10 @@
 {
   "name": "cofog-0220-civil-component",
   "version": "1.0.0",
-  "description": "COFOG component (TS-native migration)",
+  "description": "COFOG 0220 governed passive civil-defense event relay boundary",
   "main": "src/app.ts",
   "scripts": {
-    "test": "echo \"no tests\""
+    "test": "node --test test/*.test.ts"
   },
   "keywords": [],
   "author": "",

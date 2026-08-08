@@ -1,10 +1,10 @@
 {
   "name": "etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0220-civil-defense-aevbmpkh",
   "version": "1.0.0",
-  "description": "COFOG component (TS-native migration)",
-  "main": "src/app.ts",
+  "description": "Compatibility metadata for the canonical COFOG 0220 passive civil-defense component",
+  "main": "../cofog-0220-civil-component/src/app.ts",
   "scripts": {
-    "test": "echo \"no tests\""
+    "test": "npm --prefix ../cofog-0220-civil-component test"
   },
   "keywords": [],
   "author": "",

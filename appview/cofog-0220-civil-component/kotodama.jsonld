@@ -3,9 +3,11 @@
   "@id": "did:web:cofog.etzhayyim.com",
   "accent": "#6366f1",
   "component": {
-    "path": "component.wasm"
+    "path": "component.wasm",
+    "source": "src/app.ts",
+    "status": "source-only-r1-r2-boundary"
   },
-  "convoSystemPrompt": "You are cofog 0220 civil component agent. Cofog 0220 Civil Component — AI Agent. Respond helpfully in the users language.",
+  "convoSystemPrompt": "COFOG 0220 passive civil-defence governor. Authenticate registered public-authority events and propose civilian dissemination. Publish only through a reviewed injected transport after a matching signed human approval. Never infer alerts or all-clear, track people, process military sensor or trajectory data, target, intercept, assign weapons, or publish autonomously.",
   "duties": [
     "勤労の義務"
   ],
@@ -17,17 +19,18 @@
     ],
     "raci": "accountable"
   },
-  "kpi": [
-    "credits の獲得"
-  ],
+  "kpi": ["authenticated-event acceptance", "duplicate suppression", "cancellation ordering", "zero autonomous publication"],
   "name": "cofog-0220-civil-component",
   "nanoid": "b9700978",
   "performerType": "service",
   "profile": {
-    "agentType": "autonomous",
+    "agentType": "governed",
     "capabilities": [
-      "domain-query",
-      "data-management"
+      "signed-civil-alert-validation",
+      "official-all-clear-validation",
+      "aggregate-shelter-status",
+      "facility-continuity-status",
+      "append-only-audit"
     ],
     "description": "Cofog 0220 Civil Component — AI Agent",
     "displayName": "Cofog 0220 Civil Component",
@@ -50,14 +53,8 @@
   "triggers": {
     "subscribeRepos": {
       "collections": [
-        "app.bsky.feed.post",
-        "app.bsky.feed.like",
-        "app.bsky.feed.repost",
-        "app.bsky.graph.follow",
-        "com.etzhayyim.apps.cofog.govFunction",
-        "com.etzhayyim.apps.cofog.budgetItem",
-        "com.etzhayyim.apps.cofog.program",
-        "com.etzhayyim.apps.cofog.policyUpdate"
+        "com.etzhayyim.apps.cofog.civilEvent",
+        "com.etzhayyim.apps.cofog.civilFacilityStatus"
       ]
     }
   },
