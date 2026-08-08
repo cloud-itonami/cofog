@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package cofog.civil_defense.v1;
+
+service CivilDefenseService {
+  rpc SubmitSignedEvent(SubmitSignedEventRequest) returns (SubmitSignedEventResponse);
+  rpc GetEventStatus(GetEventStatusRequest) returns (GetEventStatusResponse);
+  rpc PublishApprovedProposal(PublishApprovedProposalRequest) returns (PublishApprovedProposalResponse);
+}
+
+enum EventKind {
+  EVENT_KIND_UNSPECIFIED = 0;
+  ALERT_ISSUED = 1;
+  ALERT_UPDATED = 2;
+  ALERT_CANCELLED = 3;
+  SHELTER_STATUS = 4;
+  FACILITY_OUTAGE = 5;
+  RESOURCE_REQUEST = 6;
+}
+
+enum HazardKind {
+  HAZARD_KIND_UNSPECIFIED = 0;
+  AIR_RAID = 1;
+  MISSILE_THREAT = 2;
+  EXPLOSION_RISK = 3;
+  INFRASTRUCTURE_OUTAGE = 4;
+  ALL_HAZARDS = 5;
+}
+
+message AdministrativeArea {
+  string country_code = 1;
+  string code = 2;
+}
+
+message Hazard {
+  HazardKind kind = 1;
+  string severity = 2;
+}
+
+message CivilEvent {
+  string schema_version = 1;
+  string event_id = 2;
+  EventKind kind = 3;
+  string authority_id = 4;
+  string issued_at = 5;
+  string effective_at = 6;
+  string expires_at = 7;
+  AdministrativeArea area = 8;
+  string source_url = 9;
+  Hazard hazard = 10;
+  repeated string instructions = 11;
+  string references_event_id = 12;
+  string status = 13;
+  string capacity_band = 14;
+  string resource_kind = 15;
+  string summary = 16;
+}
+
+message SignedCivilEvent {
+  // Signature covers the canonical JSON encoding defined by src/domain.ts: recursively
+  // lexicographically sorted object keys, omitted undefined properties, preserved array order.
+  CivilEvent event = 1;
+  bytes ed25519_signature = 2;
+}
+
+message SubmitSignedEventRequest {
+  SignedCivilEvent envelope = 1;
+}
+
+message SubmitSignedEventResponse {
+  string outcome = 1;
+  string event_id = 2;
+  repeated string hold_reasons = 3;
+  string proposed_operation = 4;
+  bool requires_human_approval = 5;
+}
+
+message GetEventStatusRequest {
+  string event_id = 1;
+}
+
+message GetEventStatusResponse {
+  bool found = 1;
+  string event_hash = 2;
+  uint64 ledger_sequence = 3;
+}
+
+message Approval {
+  string schema_version = 1;
+  string approval_id = 2;
+  string approver_id = 3;
+  string event_id = 4;
+  string event_hash = 5;
+  string operation = 6;
+  string approved_at = 7;
+  string expires_at = 8;
+}
+
+message SignedApproval {
+  // Signature covers the canonical JSON encoding defined by src/domain.ts.
+  Approval approval = 1;
+  bytes ed25519_signature = 2;
+}
+
+message PublishApprovedProposalRequest {
+  string event_id = 1;
+  SignedApproval envelope = 2;
+}
+
+message PublishApprovedProposalResponse {
+  string outcome = 1;
+  repeated string hold_reasons = 2;
+  string channel = 3;
+  string external_id = 4;
+  string attestation_hash = 5;
+}
