@@ -1,5 +1,7 @@
 (ns cofog.civil-defense
-  (:export [govern approve checkpoint-command delivery-checkpoint-command main]))
+  (:export [canonical-event govern approval-canonical approve
+            shadow-observation checkpoint-command dispatch-checkpoint-command
+            delivery-checkpoint-command delivery-failure-command main]))
 
 ;; Civilian-only COFOG 0220 application semantics. The host owns signature
 ;; verification, clock observation, CAS storage, and transport. This module
@@ -88,6 +90,28 @@
    sequence :i64
    previous-hash :string])
 
+(defrecord CheckpointRequest
+  [current-state :document
+   expected-version :i64
+   sequence :i64
+   previous-hash :string])
+
+(defrecord DispatchRequest
+  [outbox-id :string
+   now :i64
+   lease-expires-at :i64
+   attempt :i64
+   expected-version :i64])
+
+(defrecord DeliveryFailureRequest
+  [outbox-id :string
+   failed-at :i64
+   attempt :i64
+   max-attempts :i64
+   retry-at :i64
+   error-code :string
+   expected-version :i64])
+
 ;; Outcome codes: 1 commit, 2 noop, 3 hold, 4 ready, 5 delivered.
 ;; Existing-state codes: 0 absent, 1 same event hash, 2 conflicting event id.
 ;; Event kind codes: 1 alert-issued, 2 alert-updated, 3 alert-cancelled,
@@ -101,22 +125,24 @@
 
 (defn https-url? [value :string] :bool
   (if (>= (string-length value) 8)
-    (string=? (string-substring value 0 8) "https://")
+    (not (zero? (string=? (string-substring value 0 8) "https://")))
     false))
 
 (defn contains-prohibited-text? [value :string] :bool
   (let [text (string-fold-case value)]
-    (or (string-contains? text "trajectory")
-        (string-contains? text "intercept")
-        (string-contains? text "target coordinate")
-        (string-contains? text "weapon assignment")
-        (string-contains? text "launch site")
-        (string-contains? text "sensor track")
-        (string-contains? text "military unit")
-        (string-contains? text "friendly force")
-        (string-contains? text "person id")
-        (string-contains? text "device id")
-        (string-contains? text "user location"))))
+    (not
+     (zero?
+      (or (string-contains? text "trajectory")
+          (string-contains? text "intercept")
+          (string-contains? text "target coordinate")
+          (string-contains? text "weapon assignment")
+          (string-contains? text "launch site")
+          (string-contains? text "sensor track")
+          (string-contains? text "military unit")
+          (string-contains? text "friendly force")
+          (string-contains? text "person id")
+          (string-contains? text "device id")
+          (string-contains? text "user location"))))))
 
 (defn alert-kind? [kind :i64] :bool
   (or (= kind 1) (= kind 2)))
@@ -177,6 +203,9 @@
    :resource-kind (document-i64 (:resource-kind event))
    :summary (document-string (:summary event))))
 
+(defn canonical-event [event [:ref :cofog.civil-defense/CivilEvent]] :string
+  (document-print (event-document event)))
+
 (defn operation-for [kind :i64] :i64
   (if (or (= kind 1) (= kind 2))
     1
@@ -205,7 +234,7 @@
       (let [authority-reason (if (:reference-authority-matches evidence) 0 1024)
             area-reason (if (:reference-area-matches evidence) 0 2048)
             time-reason (if (>= (:issued-at event) (:reference-issued-at evidence)) 0 4096)]
-        (bit-or authority-reason (bit-or area-reason time-reason))))
+        (+ authority-reason (+ area-reason time-reason))))
     0))
 
 (defn govern-reasons [request [:ref :cofog.civil-defense/GovernRequest]] :i64
@@ -221,17 +250,16 @@
                              (< (:effective-at event) (:expires-at event))) 0 32)
         expired-reason (if (> (:expires-at event) (:now evidence)) 0 64)
         future-reason (if (<= (:issued-at event) (+ (:now evidence) 300000)) 0 128)
-        conflict-reason (if (= (:existing-state evidence) 2) 256 0)]
-    (bit-or shape-reason
-            (bit-or prohibited-reason
-                    (bit-or authority-reason
-                            (bit-or origin-reason
-                                    (bit-or signature-reason
-                                            (bit-or time-reason
-                                                    (bit-or expired-reason
-                                                            (bit-or future-reason
-                                                                    (bit-or conflict-reason
-                                                                            (reference-reasons event evidence))))))))))))
+        conflict-reason (if (= (:existing-state evidence) 2) 256 0)
+        r1 (+ shape-reason prohibited-reason)
+        r2 (+ r1 authority-reason)
+        r3 (+ r2 origin-reason)
+        r4 (+ r3 signature-reason)
+        r5 (+ r4 time-reason)
+        r6 (+ r5 expired-reason)
+        r7 (+ r6 future-reason)
+        r8 (+ r7 conflict-reason)]
+    (+ r8 (reference-reasons event evidence))))
 
 (defn govern [request [:ref :cofog.civil-defense/GovernRequest]] [:ref :cofog.civil-defense/Decision]
   (let [source-event (:event request)
@@ -258,6 +286,9 @@
    :approved-at (document-i64 (:approved-at request))
    :expires-at (document-i64 (:approval-expires-at request))))
 
+(defn approval-canonical [request [:ref :cofog.civil-defense/ApprovalRequest]] :string
+  (document-print (approval-payload request)))
+
 (defn approval-reasons [request [:ref :cofog.civil-defense/ApprovalRequest]] :i64
   (let [decision-reason (if (= (:decision-outcome request) 1) 0 1)
         shape-reason (if (and (nonempty? (:approval-id request))
@@ -273,14 +304,14 @@
                            32)
                          32)
         proposal-reason (if (> (:proposal-expires-at request) (:now request)) 0 64)
-        replay-reason (if (:already-used request) 128 0)]
-    (bit-or decision-reason
-            (bit-or shape-reason
-                    (bit-or approver-reason
-                            (bit-or signature-reason
-                                    (bit-or window-reason
-                                            (bit-or binding-reason
-                                                    (bit-or proposal-reason replay-reason)))))))))
+        replay-reason (if (:already-used request) 128 0)
+        r1 (+ decision-reason shape-reason)
+        r2 (+ r1 approver-reason)
+        r3 (+ r2 signature-reason)
+        r4 (+ r3 window-reason)
+        r5 (+ r4 binding-reason)
+        r6 (+ r5 proposal-reason)]
+    (+ r6 replay-reason)))
 
 (defn approve [request [:ref :cofog.civil-defense/ApprovalRequest]] [:ref :cofog.civil-defense/ApprovalDecision]
   (let [payload (approval-payload request)
@@ -291,15 +322,40 @@
       (->ApprovalDecision 3 reasons (:approval-id request) "" payload hash)
       (->ApprovalDecision 4 0 (:approval-id request) outbox-id payload hash))))
 
+(defn shadow-observation
+  [decision [:ref :cofog.civil-defense/Decision] received-at :i64 issued-at :i64]
+  :document
+  (document-map
+   :mode (document-keyword :shadow)
+   :event-id (document-string (:event-id decision))
+   :outcome (document-i64 (:outcome decision))
+   :reasons (document-i64 (:reasons decision))
+   :receive-latency-ms (document-i64
+                        (if (>= received-at issued-at)
+                          (- received-at issued-at)
+                          0))
+   :published (document-bool false)))
+
+(defn next-state
+  [current-state :document expected-version :i64 transition :document] :document
+  (document-map
+   :schema-version (document-string "cofog-0220-state/v1")
+   :version (document-i64 (+ expected-version 1))
+   :previous-state-hash (document-string (document-sha256 current-state))
+   :previous-state current-state
+   :transition transition))
+
 (defn checkpoint-command
   [decision [:ref :cofog.civil-defense/Decision]
    approval [:ref :cofog.civil-defense/ApprovalDecision]
-   expected-version :i64 sequence :i64 previous-hash :string]
+   request [:ref :cofog.civil-defense/CheckpointRequest]]
   :document
-  (let [ledger-entry
+  (let [expected-version (:expected-version request)
+        current-state (:current-state request)
+        ledger-entry
         (document-map
-         :sequence (document-i64 sequence)
-         :previous-hash (document-string previous-hash)
+         :sequence (document-i64 (:sequence request))
+         :previous-hash (document-string (:previous-hash request))
          :event-id (document-string (:event-id decision))
          :event-hash (document-string (:event-hash decision))
          :event (:event decision))
@@ -314,15 +370,44 @@
          :approval-hash (document-string (:payload-hash approval))
          :status (document-keyword :pending)
          :attempt (document-i64 0))]
+    (if (and (= (:outcome decision) 1) (= (:outcome approval) 4))
+      (let [transition
+            (document-map
+             :kind (document-keyword :event-approved)
+             :consume-approval-id (document-string (:approval-id approval))
+             :ledger-entry (document-assoc ledger-entry :entry-hash (document-string entry-hash))
+             :outbox outbox)]
+        (document-map
+         :effect (document-keyword :storage-cas-put)
+         :key (document-keyword :cofog-0220-state)
+         :expected-version (document-i64 expected-version)
+         :next-state (next-state current-state expected-version transition)))
+      (document-map
+       :effect (document-keyword :hold)
+       :reason (document-keyword :decision-or-approval-not-ready)))))
+
+(defn dispatch-checkpoint-command
+  [request [:ref :cofog.civil-defense/DispatchRequest] current-state :document] :document
+  (if (and (> (:lease-expires-at request) (:now request))
+           (> (:attempt request) 0))
+    (let [transition
+          (document-map
+           :kind (document-keyword :outbox-dispatching)
+           :require-outbox-status (document-keyword :pending)
+           :outbox-id (document-string (:outbox-id request))
+           :next-outbox-status (document-keyword :dispatching)
+           :lease-expires-at (document-i64 (:lease-expires-at request))
+           :attempt (document-i64 (:attempt request))
+           :idempotency-key (document-string (:outbox-id request)))]
+      (document-map
+       :effect (document-keyword :storage-cas-put)
+       :key (document-keyword :cofog-0220-state)
+       :expected-version (document-i64 (:expected-version request))
+       :next-state (next-state current-state (:expected-version request) transition)))
     (document-map
-     :effect (document-keyword :storage-cas-put)
-     :key (document-keyword :cofog-0220-state)
-     :expected-version (document-i64 expected-version)
-     :require-decision-outcome (document-i64 1)
-     :require-approval-outcome (document-i64 4)
-     :consume-approval-id (document-string (:approval-id approval))
-     :ledger-entry (document-assoc ledger-entry :entry-hash (document-string entry-hash))
-     :outbox outbox)))
+     :effect (document-keyword :hold)
+     :reason (document-keyword :invalid-dispatch-lease)
+     :outbox-id (document-string (:outbox-id request)))))
 
 (defn delivery-attestation [request [:ref :cofog.civil-defense/DeliveryRequest]] :document
   (let [body
@@ -339,15 +424,40 @@
          :delivered-at (document-i64 (:delivered-at request)))]
     (document-assoc body :attestation-hash (document-string (document-sha256 body)))))
 
-(defn delivery-checkpoint-command [request [:ref :cofog.civil-defense/DeliveryRequest] expected-version :i64] :document
-  (document-map
-   :effect (document-keyword :storage-cas-put)
-   :key (document-keyword :cofog-0220-state)
-   :expected-version (document-i64 expected-version)
-   :require-outbox-status (document-keyword :dispatching)
-   :outbox-id (document-string (:outbox-id request))
-   :next-outbox-status (document-keyword :delivered)
-   :delivery-attestation (delivery-attestation request)))
+(defn delivery-checkpoint-command
+  [request [:ref :cofog.civil-defense/DeliveryRequest]
+   current-state :document expected-version :i64] :document
+  (let [transition
+        (document-map
+         :kind (document-keyword :outbox-delivered)
+         :require-outbox-status (document-keyword :dispatching)
+         :outbox-id (document-string (:outbox-id request))
+         :next-outbox-status (document-keyword :delivered)
+         :delivery-attestation (delivery-attestation request))]
+    (document-map
+     :effect (document-keyword :storage-cas-put)
+     :key (document-keyword :cofog-0220-state)
+     :expected-version (document-i64 expected-version)
+     :next-state (next-state current-state expected-version transition))))
+
+(defn delivery-failure-command
+  [request [:ref :cofog.civil-defense/DeliveryFailureRequest] current-state :document] :document
+  (let [terminal (>= (:attempt request) (:max-attempts request))]
+    (let [transition
+          (document-map
+           :kind (document-keyword :outbox-failed)
+           :require-outbox-status (document-keyword :dispatching)
+           :outbox-id (document-string (:outbox-id request))
+           :next-outbox-status (document-keyword (if terminal :dead-letter :pending))
+           :failed-at (document-i64 (:failed-at request))
+           :attempt (document-i64 (:attempt request))
+           :retry-at (document-i64 (if terminal 0 (:retry-at request)))
+           :error-code (document-string (:error-code request)))]
+      (document-map
+       :effect (document-keyword :storage-cas-put)
+       :key (document-keyword :cofog-0220-state)
+       :expected-version (document-i64 (:expected-version request))
+       :next-state (next-state current-state (:expected-version request) transition)))))
 
 (defn valid-fixture [] [:ref :cofog.civil-defense/GovernRequest]
   (->GovernRequest
@@ -379,18 +489,35 @@
                                             :summary "Compute an intercept point.")))
         approved (approve (approval-fixture decision false))
         replayed (approve (approval-fixture decision true))
+        checkpoint (checkpoint-command
+                    decision approved
+                    (->CheckpointRequest (document-null) 0 1 "GENESIS"))
         delivery (->DeliveryRequest
                   "outbox:approval-001" "approval-001" "evt-001"
                   (:event-hash decision) 1 "fixture-channel" "delivery-1"
                   1150000 1 "GENESIS")
-        attestation (delivery-attestation delivery)]
+        attestation (delivery-attestation delivery)
+        shadow (shadow-observation decision 1105000 1000000)
+        dispatch (dispatch-checkpoint-command
+                  (->DispatchRequest "outbox:approval-001" 1100000 1160000 1 3)
+                  (document-null))
+        delivered (delivery-checkpoint-command delivery (document-null) 4)
+        failure (delivery-failure-command
+                 (->DeliveryFailureRequest "outbox:approval-001" 1170000 3 3
+                                           0 "transport-timeout" 4)
+                 (document-null))]
     (if (and (= (record-get [:ref :cofog.civil-defense/Decision] decision :outcome) 1)
              (= (record-get [:ref :cofog.civil-defense/Decision] decision :operation) 1)
              (= (record-get [:ref :cofog.civil-defense/Decision] unsafe :outcome) 3)
-             (> (bit-and (record-get [:ref :cofog.civil-defense/Decision] unsafe :reasons) 2) 0)
+             (= (record-get [:ref :cofog.civil-defense/Decision] unsafe :reasons) 2)
              (= (record-get [:ref :cofog.civil-defense/ApprovalDecision] approved :outcome) 4)
              (= (record-get [:ref :cofog.civil-defense/ApprovalDecision] replayed :outcome) 3)
-             (> (bit-and (record-get [:ref :cofog.civil-defense/ApprovalDecision] replayed :reasons) 128) 0)
+             (= (record-get [:ref :cofog.civil-defense/ApprovalDecision] replayed :reasons) 128)
+             (> (document-count checkpoint) 0)
+             (> (document-count shadow) 0)
+             (> (document-count dispatch) 0)
+             (> (document-count delivered) 0)
+             (> (document-count failure) 0)
              (= (string-length
                  (option-value-of [:option :string]
                    (document-string-value

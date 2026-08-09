@@ -3,9 +3,11 @@
   "@id": "did:web:cofog.etzhayyim.com",
   "accent": "#6366f1",
   "component": {
-    "path": "component.wasm"
+    "path": "../cofog-0220-civil-component/component.wasm",
+    "source": "../cofog-0220-civil-component/src/cofog/civil_defense.kotoba",
+    "status": "kotoba-source-verified-restricted-esm"
   },
-  "convoSystemPrompt": "You are ai etzhayyim performer sys etzhayyim actors pba7d22f svc cofog 0220 civil defense agent. Ai Etzhayyim Performer Sys Etzhayyim Actors Pba7D22F Svc Cofog 0220 Civil Defense — AI Agent. Respond helpfully in the users language.",
+  "convoSystemPrompt": "Compatibility entry for the COFOG 0220 passive civil-defence governor. Authenticate public-authority events and propose civilian dissemination. Publish only through a reviewed injected transport after a matching signed human approval. Never infer alerts or all-clear, track people, process military sensor or trajectory data, target, intercept, assign weapons, or publish autonomously.",
   "duties": [
     "勤労の義務"
   ],
@@ -17,17 +19,22 @@
     ],
     "raci": "accountable"
   },
-  "kpi": [
-    "credits の獲得"
-  ],
+  "kpi": ["authenticated-event acceptance", "duplicate suppression", "cancellation ordering", "zero autonomous publication"],
   "name": "etzhayyim-performer-sys-etzhayyim-actors-pba7d22f-svc-cofog-0220-civil-defense-aevbmpkh",
   "nanoid": "aevbmpkh",
   "performerType": "system",
   "profile": {
-    "agentType": "autonomous",
+    "agentType": "governed",
     "capabilities": [
-      "domain-query",
-      "data-management"
+      "signed-civil-alert-validation",
+      "official-all-clear-validation",
+      "aggregate-shelter-status",
+      "facility-continuity-status",
+      "append-only-audit",
+      "administrative-area-source-quorum",
+      "offline-warning-bundle-proposal",
+      "multi-route-resilience",
+      "synthetic-drill-coverage"
     ],
     "description": "Ai Etzhayyim Performer Sys Etzhayyim Actors Pba7D22F Svc Cofog 0220 Civil Defense — AI Agent",
     "displayName": "Ai Etzhayyim Performer Sys Etzhayyim Actors Pba7D22F Svc Cofog 0220 Civil Defense",
@@ -50,14 +57,8 @@
   "triggers": {
     "subscribeRepos": {
       "collections": [
-        "app.bsky.feed.post",
-        "app.bsky.feed.like",
-        "app.bsky.feed.repost",
-        "app.bsky.graph.follow",
-        "com.etzhayyim.apps.cofog.govFunction",
-        "com.etzhayyim.apps.cofog.budgetItem",
-        "com.etzhayyim.apps.cofog.program",
-        "com.etzhayyim.apps.cofog.policyUpdate"
+        "com.etzhayyim.apps.cofog.civilEvent",
+        "com.etzhayyim.apps.cofog.civilFacilityStatus"
       ]
     }
   },

@@ -5,7 +5,8 @@ package cofog.civil_defense.v1;
 service CivilDefenseService {
   rpc SubmitSignedEvent(SubmitSignedEventRequest) returns (SubmitSignedEventResponse);
   rpc GetEventStatus(GetEventStatusRequest) returns (GetEventStatusResponse);
-  rpc PublishApprovedProposal(PublishApprovedProposalRequest) returns (PublishApprovedProposalResponse);
+  rpc SubmitApproval(SubmitApprovalRequest) returns (SubmitApprovalResponse);
+  rpc AssessAreaResilience(AssessAreaResilienceRequest) returns (AssessAreaResilienceResponse);
 }
 
 enum EventKind {
@@ -42,9 +43,9 @@ message CivilEvent {
   string event_id = 2;
   EventKind kind = 3;
   string authority_id = 4;
-  string issued_at = 5;
-  string effective_at = 6;
-  string expires_at = 7;
+  int64 issued_at_unix_ms = 5;
+  int64 effective_at_unix_ms = 6;
+  int64 expires_at_unix_ms = 7;
   AdministrativeArea area = 8;
   string source_url = 9;
   Hazard hazard = 10;
@@ -54,11 +55,12 @@ message CivilEvent {
   string capacity_band = 14;
   string resource_kind = 15;
   string summary = 16;
+  string source_origin = 17;
 }
 
 message SignedCivilEvent {
-  // Signature covers the canonical JSON encoding defined by src/domain.ts: recursively
-  // lexicographically sorted object keys, omitted undefined properties, preserved array order.
+  // Signature covers canonical document bytes represented as lowercase hexadecimal by
+  // canonical-event in src/cofog/civil_defense.kotoba.
   CivilEvent event = 1;
   bytes ed25519_signature = 2;
 }
@@ -68,10 +70,10 @@ message SubmitSignedEventRequest {
 }
 
 message SubmitSignedEventResponse {
-  string outcome = 1;
+  int32 outcome = 1;
   string event_id = 2;
-  repeated string hold_reasons = 3;
-  string proposed_operation = 4;
+  int64 reason_mask = 3;
+  int64 proposed_operation = 4;
   bool requires_human_approval = 5;
 }
 
@@ -91,26 +93,58 @@ message Approval {
   string approver_id = 3;
   string event_id = 4;
   string event_hash = 5;
-  string operation = 6;
-  string approved_at = 7;
-  string expires_at = 8;
+  int64 operation = 6;
+  int64 approved_at_unix_ms = 7;
+  int64 expires_at_unix_ms = 8;
 }
 
 message SignedApproval {
-  // Signature covers the canonical JSON encoding defined by src/domain.ts.
+  // Signature covers canonical document bytes represented as lowercase hexadecimal by
+  // approval-canonical in src/cofog/civil_defense.kotoba.
   Approval approval = 1;
   bytes ed25519_signature = 2;
 }
 
-message PublishApprovedProposalRequest {
+message SubmitApprovalRequest {
   string event_id = 1;
   SignedApproval envelope = 2;
 }
 
-message PublishApprovedProposalResponse {
-  string outcome = 1;
-  repeated string hold_reasons = 2;
-  string channel = 3;
-  string external_id = 4;
-  string attestation_hash = 5;
+message SubmitApprovalResponse {
+  int32 outcome = 1;
+  int64 reason_mask = 2;
+  string outbox_id = 3;
+  string approval_payload_hash = 4;
+}
+
+message ProhibitedBoundaryEvidence {
+  bool precise_coordinate = 1;
+  bool trajectory = 2;
+  bool targeting = 3;
+  bool sensor_track = 4;
+  bool weapon_assignment = 5;
+  bool interceptor_or_weapon = 6;
+  bool military_unit_location = 7;
+  bool person_or_device_location = 8;
+}
+
+message AssessAreaResilienceRequest {
+  AdministrativeArea area = 1;
+  int64 now_unix_ms = 2;
+  int64 expires_at_unix_ms = 3;
+  int64 valid_source_count = 4;
+  int64 required_quorum = 5;
+  int64 highest_severity = 6;
+  int64 revoked_source_count = 7;
+  int64 stale_source_count = 8;
+  string source_set_hash = 9;
+  ProhibitedBoundaryEvidence prohibited = 10;
+}
+
+message AssessAreaResilienceResponse {
+  int32 outcome = 1;
+  int64 reason_mask = 2;
+  int64 severity = 3;
+  int64 expires_at_unix_ms = 4;
+  string canonical_assessment_hex = 5;
 }

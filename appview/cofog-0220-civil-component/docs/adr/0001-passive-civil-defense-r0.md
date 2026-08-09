@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted for R0 implementation on 2026-08-08.
+Accepted on 2026-08-08. Implementation mechanics are superseded by ADR-0003.
 
 ## Context
 
@@ -19,7 +19,7 @@ the repository boundary.
 
 ## Decision
 
-Implement the TS-native `cofog-0220-civil-component` as the canonical R0 core.
+Implement `cofog-0220-civil-component` as the canonical passive-protection core.
 
 1. Replace arbitrary function execution with a closed signed-event contract.
 2. Admit administrative areas only; never precise coordinates or tracked people.
@@ -28,7 +28,7 @@ Implement the TS-native `cofog-0220-civil-component` as the canonical R0 core.
    event IDs, and military/targeting/location attributes or text.
 5. Require an existing alert from the same authority and administrative area before accepting
    an update or official cancellation/all-clear.
-6. Persist accepted R0 events to a hash-chained in-memory ledger and emit only
+6. Persist accepted events through an auditable state boundary and emit only
    `effect: propose`, with human approval required.
 
 ## Allowed operations
@@ -50,7 +50,6 @@ Implement the TS-native `cofog-0220-civil-component` as the canonical R0 core.
 
 ## Consequences
 
-The component can now be tested as a real passive-protection governor without claiming a
-live national warning integration. Production readiness still requires an operator-approved
-authority registry, durable append-only storage, shadow-feed measurements, a human approval
-surface, delivery attestations, and an independently reviewed publisher.
+The permanent safety boundary remains in force. ADR-0003 replaces the initial language and
+in-memory implementation with Kotoba semantics, capability adapters, and atomic CAS outbox
+checkpointing.

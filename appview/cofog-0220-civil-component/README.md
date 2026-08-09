@@ -1,70 +1,65 @@
 # COFOG 0220 — Passive Civil Defence
 
-R0 core plus R1/R2 safety-boundary implementation for a narrow civil-warning governor.
-It verifies signed events from registered public authorities, enforces an
-administrative-region-only data model, records accepted events in a hash-chained ledger,
-and emits a typed dissemination **proposal**. Publication is possible only through an
-injected transport after a separately signed human approval is verified.
+Kotoba 言語で実装した、狭い範囲の民間警報ガバナーです。登録済み公的機関の
+署名付きイベントを検証し、行政区域単位のデータだけを扱い、外部配信ではなく
+人間承認が必要な提案を生成します。
 
-## What is implemented
+## 実装済み
 
-- Ed25519 verification against an injected authority registry.
-- Exact source-origin allowlists.
-- Closed event schema for official warnings, official cancellations, shelter status,
-  facility outages, and non-clinical resource requests.
-- Expiry, future-skew, ordering, duplicate, and conflicting-event-id checks.
-- Official all-clear requires an existing alert from the same authority and area.
-- Alert updates also require an existing alert from the same authority and area.
-- Append-only, hash-chained in-memory and local JSONL ledgers with restart verification.
-- Closed JSON authority-registry loader requiring Ed25519 keys and exact HTTPS origins.
-- Non-publishing shadow evaluation with outcome, hold-reason, and receive-latency metrics;
-  callers provide a dedicated shadow ledger.
-- Proposal-only output with human approval required.
-- Approval signatures bound to the event hash and proposed operation, expiry checks,
-  one-time approval IDs, and hash-chained delivery attestations.
+- 閉じた civil-event schema と禁止データ・禁止文言の fail-closed 検査。
+- 発行時刻、期限、未来時刻、重複、event-id 衝突、更新・解除参照の検査。
+- authority、exact HTTPS origin、署名結果を入力証拠として扱う純粋な governor。
+- authority key をアプリに渡さない `:identity/verify` capability 境界。
+- proposal と event/hash/operation に束縛された一回限りの人間承認。
+- event ledger append、approval consumption、outbox enqueue を一つの
+  `:cofog-0220-state` CAS 更新にまとめる checkpoint。
+- outbox の lease、attempt、retry、dead-letter、冪等性キー。
+- 配達結果の hash-chain attestation と、非配信 shadow observation。
+- 行政区域限定の multi-source quorum、stale/revocation observation。
+- 二者承認された offline bundle と複数 provider route の failover 提案。
+- synthetic drill の区域・施設到達率、route 成功率、復旧時間 metrics。
+- 座標、trajectory、targeting、sensor track、weapon assignment 等の reason-mask 拒否。
+- capability-free core の restricted ESM conformance fixture。
 
-## Constitutional boundary
+## 安全境界
 
-This component reduces civilian consequences. It is not an air-defence weapon system.
-The schema rejects precise coordinates, trajectories, intercept points, interceptors,
-targets, launch sites, sensor tracks, military units, friendly-force locations, weapon
-assignment, person identifiers, device identifiers, and user locations. Unknown fields
-are rejected rather than silently retained.
+このコンポーネントは民間被害の低減専用で、迎撃・攻撃システムではありません。
+精密座標、trajectory、intercept、target、launch site、sensor track、military unit、
+friendly-force location、weapon assignment、person/device identifier、user location を
+拒否します。AI による警報・解除の生成も行いません。
 
-No AI-generated alert or all-clear is permitted. The publisher boundary can relay only the
-governor-clean proposal produced from an authority-signed event and a matching human approval.
-No real transport implementation is bundled.
+公開 transport は同梱していません。authority verification、clock、CAS storage、
+transport、credentials は host が所有し、Kotoba application は ambient authority を
+持ちません。既定 policy は空で、effectful adapter は個別 policy がなければ拒否されます。
 
-## Run
+## 検証
 
 ```bash
 npm test
 ```
 
-Node's built-in TypeScript strip-only runtime and test runner are sufficient; the R0 core
-has no runtime dependency on the workspace SDK.
+検証は Kotoba compiler の check、effect module の deny-by-default、restricted ESM
+compile、conformance fixture `main=42` を実行します。生成物は `target/` に置かれ、
+repository には追加されません。
 
-Signatures cover the UTF-8 bytes of the event's canonical JSON representation: object keys
-are recursively sorted lexicographically, undefined object properties are omitted, and array
-order is preserved. `canonicalJson` is exported so adapters and test fixtures use the same
-encoding.
+署名対象は `canonical-event` / `approval-canonical` が返す canonical document bytes の
+lowercase hexadecimal 表現です。時刻は Unix milliseconds の `i64` です。
 
-## Layout
+## 構成
 
-- `src/domain.ts` — closed contracts, canonical encoding, prohibited-field gate.
-- `src/governor.ts` — signature, source, time, idempotency, and cancellation governance.
-- `src/ledger.ts` — hash-chained append-only R0 ledger.
-- `src/registry.ts` — fail-closed operator authority-registry loader.
-- `src/shadow.ts` — non-publishing evaluation and metrics.
-- `src/publisher.ts` — signed human-approval gate, injected transport, delivery attestation.
-- `proto/civil_defense.proto` — typed wire contract; no arbitrary execute-function payload.
-- `test/civil-defense.test.ts` — executable boundary and happy-path tests.
-- `docs/adr/0001-passive-civil-defense-r0.md` — passive-protection decision boundary.
-- `docs/adr/0002-r1-r2-governed-relay-boundary.md` — durable/shadow/approval design.
+- `src/cofog/civil_defense.kotoba` — 純粋な state/event decision、approval、outbox。
+- `src/cofog/civil_resilience.kotoba` — quorum、offline/failover、drill coverage、安全境界。
+- `src/cofog/authority_verifier.kotoba` — operator registry を所有する署名検証 capability。
+- `src/cofog/checkpoint_store.kotoba` — 単一キー CAS 永続化 capability。
+- `config/authority-registry.edn` — 実 key を含まない fail-closed 設定。
+- `config/providers.edn` — provider を無効化した host wiring 契約。
+- `proto/civil_defense.proto` — arbitrary execute-function を持たない wire contract。
+- `scripts/verify.cljs` — nbb/CLJS 検証オーケストレーター。
+- `docs/adr/0003-kotoba-governed-relay.md` — 現行アーキテクチャ決定。
+- `docs/adr/0004-passive-resilience-coverage.md` — 民間防護 coverage 拡張。
 
-## Maturity
+## 非主張
 
-The implementation remains offline: no live official feed, real authority key, operator UI,
-or external delivery connector is bundled, and no `component.wasm` is claimed as built.
-The JSONL ledger is a single-process local durability option, not a replicated production
-store. Shadow adapters and transports must be independently reviewed before connection.
+live official feed、実 authority/approver key、operator UI、外部 transport、運用 CAS
+provider は未接続です。restricted ESM は検証済みですが `component.wasm` は未生成で、
+実警報を配信したという主張もありません。

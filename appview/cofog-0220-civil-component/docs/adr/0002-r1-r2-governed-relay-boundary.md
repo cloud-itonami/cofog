@@ -2,7 +2,7 @@
 
 ## Status
 
-Implemented offline on 2026-08-08. External integrations are not approved by this ADR.
+Superseded by ADR-0003. External integrations were never approved by this ADR.
 
 ## Context
 
@@ -23,6 +23,12 @@ external dissemination.
    separate Ed25519 human approval bound to the accepted event hash and operation.
 5. Reject expired, future, mismatched, or previously used approvals before transport. Record
    successful receipts in a hash-chained delivery-attestation ledger.
+
+## Supersession
+
+The JSONL and in-memory mechanisms described here were prototypes. ADR-0003 replaces them
+with a Kotoba application, a single-value CAS checkpoint, durable-outbox state semantics,
+and deny-by-default host capabilities.
 
 ## Operational boundary
 

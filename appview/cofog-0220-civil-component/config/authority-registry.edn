@@ -1,0 +1,11 @@
+{:cofog.authority-registry/version 1
+ :cofog.authority-registry/status :operator-unconfigured
+ :cofog.authority-registry/algorithm :ed25519
+ :cofog.authority-registry/rules
+ {:unknown-authority :deny
+  :origin-match :exact-https-origin
+  :key-selection :provider-owned
+  :application-supplied-key :deny
+  :revocation-check :required-at-verification
+  :real-keys-bundled false}
+ :cofog.authority-registry/authorities []}

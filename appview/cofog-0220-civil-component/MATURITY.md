@@ -1,39 +1,34 @@
 # Maturity
 
-## R0 — implemented and verified
+## Offline boundary — implemented and verified
 
-- Closed TypeScript contracts.
-- Ed25519 authority signatures and source-origin allowlist.
-- Independent governor returning `commit | noop | hold`.
-- Proposal-only dissemination; human approval remains mandatory.
-- Hash-chained in-memory ledger.
-- Offline tests for signatures, expiry, idempotency, conflicting IDs, prohibited fields,
-  closed-schema behavior, official all-clear, shelters, facilities, and resources.
-
-## R1/R2 boundaries — implemented and verified offline
-
-- Fail-closed operator authority-registry loader.
-- Local JSONL hash-chain ledger that verifies on restart and rejects tampering.
-- Non-publishing shadow evaluation metrics using a dedicated injected ledger.
-- Signed human approval bound to event hash and operation.
-- Approval expiry and replay checks before the injected transport is invoked.
-- Hash-chained in-memory delivery attestations.
+- Kotoba の closed records による civil-event、evidence、approval、delivery contract。
+- capability-free governor と proposal-only output。
+- exact origin、authority、signature evidence、期限、順序、重複、参照整合性の検査。
+- operator-owned `:identity/verify` と single-key `:storage/transact` capability adapter。
+- event append、approval consumption、outbox enqueue の CAS checkpoint。
+- outbox lease、attempt、retry、dead-letter、delivery attestation hash chain。
+- shadow observation と restricted ESM conformance fixtures。
+- administrative-area quorum、stale/revocation、offline bundle、route redundancy。
+- synthetic drill coverage と passive-resilience CAS checkpoint。
+- effect modules が空 policy では拒否される deny-by-default 検証。
 
 ## Not claimed
 
-- No live Ukraine or other national alert feed is connected.
-- No official authority keys are bundled; tests use an ephemeral fixture key.
-- No warning has been published.
-- No replicated or concurrent production ledger and no `component.wasm` has been built.
-- No live feed adapter, operator approval UI, external transport, or durable delivery
-  attestation store is bundled.
-- No sensor, trajectory, interception, targeting, or military C2 capability exists.
+- live Ukraine または他国の official feed は未接続。
+- real authority/approver key、hardware-backed signing、operator UI は未実装。
+- external warning transport と operational CAS provider は未設定。
+- 警報は配信していない。
+- `component.wasm` は未生成。現在の verification artifact は restricted ESM。
+- sensor、trajectory、interception、targeting、military C2 capability は存在しない。
 
-## Next gates
+## Production gates
 
-1. Connect an independently reviewed read-only adapter to saved official-feed fixtures;
-   measure latency, duplicates, update/cancellation ordering, and source outages.
-2. Add an operator approval UI, hardware-backed approver keys, a transactional outbox, and
-   durable delivery attestations before any external transport is enabled.
-3. R3 supervised relay: automatic relay only for cryptographically authenticated official
-   events; all-clear remains source-derived and never inferred.
+1. 保存済み official-feed fixtures で read-only adapter を評価し、latency、duplicate、
+   update/cancellation ordering、outage recovery を測定する。
+2. 独立審査済み authority registry provider と hardware-backed approver key を接続する。
+3. operational CAS store で conflict、restart、crash recovery、outbox lease recovery、
+   dead-letter replay を検証する。
+4. accessibility/security review 済み operator UI と transport を明示的に enable する。
+5. Kotoba WASM backend の typed record/document path を解決し、multi-runtime conformance
+   を通してから runtime promotion を判断する。

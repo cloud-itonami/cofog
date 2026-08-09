@@ -1,0 +1,44 @@
+{:cofog.provider-set/version 1
+ :cofog.provider-set/status :offline-boundaries-only
+ :cofog.provider-set/providers
+ [{:provider/id :cofog/authority-verifier
+   :capability :identity/verify
+   :source "src/cofog/authority_verifier.kotoba"
+   :policy "authority-policy.edn"
+   :resource "config/authority-registry.edn"
+   :ambient-network false
+   :configured false}
+  {:provider/id :cofog/checkpoint-store
+   :capability :storage/transact
+   :source "src/cofog/checkpoint_store.kotoba"
+   :policy "storage-policy.edn"
+   :storage-key :cofog-0220-state
+   :concurrency :single-value-cas
+   :configured false}
+  {:provider/id :cofog/official-alert-ingress
+   :status :not-bundled
+   :configured false
+   :requirements [:signed-official-source
+                  :administrative-area-only
+                  :source-revocation
+                  :stale-source-detection
+                  :no-precise-coordinate
+                  :no-trajectory
+                  :no-targeting
+                  :no-sensor-track
+                  :no-weapon-assignment]}
+  {:provider/id :cofog/external-transport
+   :capability :transport/deliver
+   :status :not-bundled
+   :requirements [:operator-configured-destination
+                  :idempotency-key
+                  :multiple-distinct-providers
+                  :offline-route
+                  :timeout
+                  :receipt
+                  :independent-review]}]
+ :cofog.provider-set/rules
+ {:default :deny
+  :live-feed false
+  :live-publishing false
+  :credentials-in-application false}}

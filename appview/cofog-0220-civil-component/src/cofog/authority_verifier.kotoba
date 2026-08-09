@@ -1,0 +1,17 @@
+(ns cofog.authority-verifier
+  (:export [verify-authority-event])
+  (:capabilities #{:identity/verify})
+  (:schemas
+   {:cofog.identity/verify-request
+    [:record :cofog.identity/verify-request
+     [[:authority-id :string]
+      [:canonical-event-hex :string]
+      [:signature :string]]]}))
+
+;; The provider is scoped to the operator registry. Application source never
+;; chooses a public key; authority-id is resolved by the admitted provider.
+;; canonical-event-hex is document-print output and the provider verifies the
+;; signature over the decoded canonical bytes.
+(defn verify-authority-event
+  [request [:ref :cofog.identity/verify-request]] :bool
+  (identity/verify request))
