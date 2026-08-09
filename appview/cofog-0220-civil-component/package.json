@@ -1,10 +1,10 @@
 {
   "name": "cofog-0220-civil-component",
   "version": "1.0.0",
-  "description": "COFOG component (TS-native migration)",
-  "main": "src/app.ts",
+  "description": "COFOG 0220 governed passive civil-defense event relay boundary",
+  "main": "src/cofog/civil_defense.kotoba",
   "scripts": {
-    "test": "echo \"no tests\""
+    "test": "nbb scripts/verify.cljs"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +12,8 @@
   "type": "module",
   "dependencies": {
     "@etzhayyim/kotodama-host-sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "nbb": "1.5.211"
   }
 }

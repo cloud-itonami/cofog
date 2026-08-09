@@ -1,0 +1,47 @@
+(ns cofog.checkpoint-store
+  (:export [persist-checkpoint])
+  (:capabilities #{:storage/transact})
+  (:schemas
+   {:kotoba.storage/get
+    [:record :kotoba.storage/get [[:key :keyword]]]
+    :kotoba.storage/put
+    [:record :kotoba.storage/put
+     [[:key :keyword] [:value :string] [:expected-version [:option :i64]]]]
+    :kotoba.storage/delete
+    [:record :kotoba.storage/delete
+     [[:key :keyword] [:expected-version [:option :i64]]]]
+    :kotoba.storage/request
+    [:variant :kotoba.storage/request
+     [[:get [:ref :kotoba.storage/get]]
+      [:put [:ref :kotoba.storage/put]]
+      [:delete [:ref :kotoba.storage/delete]]]]
+    :kotoba.storage/entry
+    [:record :kotoba.storage/entry
+     [[:key :keyword] [:value :string] [:version :i64]]]
+    :kotoba.storage/conflict
+    [:record :kotoba.storage/conflict
+     [[:key :keyword] [:current-version [:option :i64]]]]
+    :kotoba.storage/error
+    [:record :kotoba.storage/error
+     [[:code :keyword] [:message :string] [:retryable :bool]]]
+    :kotoba.storage/result
+    [:variant :kotoba.storage/result
+     [[:found [:ref :kotoba.storage/entry]]
+      [:missing :bool]
+      [:written [:ref :kotoba.storage/entry]]
+      [:deleted :bool]
+      [:conflict [:ref :kotoba.storage/conflict]]
+      [:error [:ref :kotoba.storage/error]]]]}))
+
+;; The pure core has already constructed the complete next-state snapshot. The
+;; adapter writes that snapshot as one value under one CAS key, avoiding a
+;; cross-key partial commit. It never stores an unevaluated transition command.
+(defn persist-checkpoint
+  [next-state :document expected-version [:option :i64]]
+  [:ref :kotoba.storage/result]
+  (let [put (record-new [:ref :kotoba.storage/put]
+                       :cofog-0220-state
+                       (document-edn-print next-state)
+                       expected-version)
+        request (variant-new [:ref :kotoba.storage/request] :put put)]
+    (storage/transact request)))

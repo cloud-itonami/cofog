@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package cofog.civil_defense.v1;
 
-option go_package = "github.com/etzhayyimcojp/etzhayyim-kyber/performers/etzhayyim-services-cofog-0220-civil-defense/proto;cofogproto";
-
 service CivilDefenseService {
   rpc SubmitSignedEvent(SubmitSignedEventRequest) returns (SubmitSignedEventResponse);
   rpc GetEventStatus(GetEventStatusRequest) returns (GetEventStatusResponse);
@@ -62,7 +60,7 @@ message CivilEvent {
 
 message SignedCivilEvent {
   // Signature covers canonical document bytes represented as lowercase hexadecimal by
-  // canonical-event in the canonical sibling component.
+  // canonical-event in src/cofog/civil_defense.kotoba.
   CivilEvent event = 1;
   bytes ed25519_signature = 2;
 }
@@ -102,7 +100,7 @@ message Approval {
 
 message SignedApproval {
   // Signature covers canonical document bytes represented as lowercase hexadecimal by
-  // approval-canonical in the canonical sibling component.
+  // approval-canonical in src/cofog/civil_defense.kotoba.
   Approval approval = 1;
   bytes ed25519_signature = 2;
 }

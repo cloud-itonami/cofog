@@ -1,0 +1,266 @@
+(ns cofog.civil-resilience
+  (:export [boundary-reasons assess-area prepare-offline-bundle
+            propose-route-plan drill-observation resilience-checkpoint main]))
+
+;; Passive civil-protection resilience semantics. All inputs are aggregated at
+;; administrative-area level. There are deliberately no coordinates, tracks,
+;; trajectories, targets, interceptors, weapons, people, or device locations.
+;; The host owns clocks, signature verification, storage, signing, and delivery.
+
+(defrecord BoundaryEvidence
+  [precise-coordinate :bool
+   trajectory :bool
+   targeting :bool
+   sensor-track :bool
+   weapon-assignment :bool
+   interceptor-or-weapon :bool
+   military-unit-location :bool
+   person-or-device-location :bool])
+
+(defrecord AreaAssessmentRequest
+  [country-code :string
+   area-code :string
+   now :i64
+   expires-at :i64
+   valid-source-count :i64
+   required-quorum :i64
+   highest-severity :i64
+   revoked-source-count :i64
+   stale-source-count :i64
+   source-set-hash :string
+   boundary [:ref :cofog.civil-resilience/BoundaryEvidence]])
+
+(defrecord AreaAssessmentDecision
+  [outcome :i64
+   reasons :i64
+   severity :i64
+   expires-at :i64
+   assessment :document])
+
+(defrecord OfflineBundleRequest
+  [assessment-outcome :i64
+   assessment :document
+   bundle-id :string
+   issued-at :i64
+   expires-at :i64
+   now :i64
+   approval-one-id :string
+   approval-two-id :string
+   approval-one-hash :string
+   approval-two-hash :string
+   approver-one-valid :bool
+   approver-two-valid :bool])
+
+(defrecord RoutePlanRequest
+  [assessment-outcome :i64
+   now :i64
+   expires-at :i64
+   available-route-count :i64
+   required-route-count :i64
+   distinct-provider-count :i64
+   offline-route-available :bool
+   dead-letter-count :i64])
+
+(defrecord DrillObservation
+  [zones-total :i64
+   zones-reached :i64
+   facilities-total :i64
+   facilities-reached :i64
+   route-attempts :i64
+   route-successes :i64
+   recovery-time-ms :i64
+   stale-source-count :i64
+   dead-letter-count :i64])
+
+(defn nonempty? [value :string] :bool
+  (> (string-length value) 0))
+
+(defn ratio-bps [part :i64 total :i64] :i64
+  (if (> total 0)
+    (if (<= part 0)
+      0
+      (if (>= part total)
+        10000
+        (quot (* part 10000) total)))
+    0))
+
+(defn boundary-reasons
+  [evidence [:ref :cofog.civil-resilience/BoundaryEvidence]] :i64
+  (+ (if (:precise-coordinate evidence) 1 0)
+     (+ (if (:trajectory evidence) 2 0)
+        (+ (if (:targeting evidence) 4 0)
+           (+ (if (:sensor-track evidence) 8 0)
+              (+ (if (:weapon-assignment evidence) 16 0)
+                 (+ (if (:interceptor-or-weapon evidence) 32 0)
+                    (+ (if (:military-unit-location evidence) 64 0)
+                       (if (:person-or-device-location evidence) 128 0)))))))))
+
+(defn assessment-reasons
+  [request [:ref :cofog.civil-resilience/AreaAssessmentRequest]] :i64
+  (let [area-reason (if (and (= (string-length (:country-code request)) 2)
+                             (nonempty? (:area-code request))) 0 256)
+        time-reason (if (> (:expires-at request) (:now request)) 0 512)
+        quorum-shape-reason (if (>= (:required-quorum request) 2) 0 1024)
+        quorum-reason (if (>= (:valid-source-count request)
+                              (:required-quorum request)) 0 2048)
+        severity-reason (if (and (>= (:highest-severity request) 1)
+                                 (<= (:highest-severity request) 3)) 0 4096)
+        provenance-reason (if (nonempty? (:source-set-hash request)) 0 8192)
+        counts-reason (if (and (>= (:valid-source-count request) 0)
+                               (>= (:revoked-source-count request) 0)
+                               (>= (:stale-source-count request) 0)) 0 16384)]
+    (+ (boundary-reasons (:boundary request))
+       (+ area-reason
+          (+ time-reason
+             (+ quorum-shape-reason
+                (+ quorum-reason
+                   (+ severity-reason
+                      (+ provenance-reason counts-reason)))))))))
+
+(defn assess-area
+  [request [:ref :cofog.civil-resilience/AreaAssessmentRequest]]
+  [:ref :cofog.civil-resilience/AreaAssessmentDecision]
+  (let [reasons (assessment-reasons request)
+        assessment
+        (document-map
+         :schema-version (document-string "cofog-0220-area-assessment/v1")
+         :country-code (document-string (:country-code request))
+         :area-code (document-string (:area-code request))
+         :severity (document-i64 (:highest-severity request))
+         :expires-at (document-i64 (:expires-at request))
+         :valid-source-count (document-i64 (:valid-source-count request))
+         :required-quorum (document-i64 (:required-quorum request))
+         :revoked-source-count (document-i64 (:revoked-source-count request))
+         :stale-source-count (document-i64 (:stale-source-count request))
+         :source-set-hash (document-string (:source-set-hash request))
+         :administrative-area-only (document-bool true))]
+    (if (> reasons 0)
+      (->AreaAssessmentDecision 3 reasons 0 0 (document-null))
+      (->AreaAssessmentDecision 1 0 (:highest-severity request)
+                                (:expires-at request) assessment))))
+
+(defn prepare-offline-bundle
+  [request [:ref :cofog.civil-resilience/OfflineBundleRequest]] :document
+  (let [ready (and (= (:assessment-outcome request) 1)
+                   (nonempty? (:bundle-id request))
+                   (<= (:issued-at request) (:now request))
+                   (> (:expires-at request) (:now request))
+                   (nonempty? (:approval-one-id request))
+                   (nonempty? (:approval-two-id request))
+                   (nonempty? (:approval-one-hash request))
+                   (nonempty? (:approval-two-hash request))
+                   (:approver-one-valid request)
+                   (:approver-two-valid request)
+                   (zero? (string=? (:approval-one-id request)
+                                    (:approval-two-id request))))]
+    (if ready
+      (let [payload
+            (document-map
+             :schema-version (document-string "cofog-0220-offline-bundle/v1")
+             :bundle-id (document-string (:bundle-id request))
+             :issued-at (document-i64 (:issued-at request))
+             :expires-at (document-i64 (:expires-at request))
+             :approval-one-id (document-string (:approval-one-id request))
+             :approval-two-id (document-string (:approval-two-id request))
+             :approval-one-hash (document-string (:approval-one-hash request))
+             :approval-two-hash (document-string (:approval-two-hash request))
+             :assessment (:assessment request))]
+        (document-map
+         :effect (document-keyword :propose-offline-bundle)
+         :requires-host-signature (document-bool true)
+         :requires-two-person-control (document-bool true)
+         :payload payload
+         :payload-hash (document-string (document-sha256 payload))))
+      (document-map
+       :effect (document-keyword :hold)
+       :reason (document-keyword :offline-bundle-not-authorized)))))
+
+(defn propose-route-plan
+  [request [:ref :cofog.civil-resilience/RoutePlanRequest]] :document
+  (let [ready (and (= (:assessment-outcome request) 1)
+                   (> (:expires-at request) (:now request))
+                   (>= (:required-route-count request) 2)
+                   (>= (:available-route-count request)
+                       (:required-route-count request))
+                   (>= (:distinct-provider-count request) 2)
+                   (:offline-route-available request))]
+    (if ready
+      (document-map
+       :effect (document-keyword :propose-route-plan)
+       :required-route-count (document-i64 (:required-route-count request))
+       :available-route-count (document-i64 (:available-route-count request))
+       :distinct-provider-count (document-i64 (:distinct-provider-count request))
+       :offline-route-available (document-bool true)
+       :dead-letter-count (document-i64 (:dead-letter-count request))
+       :autonomous-publication (document-bool false))
+      (document-map
+       :effect (document-keyword :hold)
+       :reason (document-keyword :insufficient-route-resilience)))))
+
+(defn drill-observation
+  [observation [:ref :cofog.civil-resilience/DrillObservation]] :document
+  (document-map
+   :mode (document-keyword :synthetic-drill)
+   :zone-coverage-bps
+   (document-i64 (ratio-bps (:zones-reached observation)
+                            (:zones-total observation)))
+   :facility-coverage-bps
+   (document-i64 (ratio-bps (:facilities-reached observation)
+                            (:facilities-total observation)))
+   :route-success-bps
+   (document-i64 (ratio-bps (:route-successes observation)
+                            (:route-attempts observation)))
+   :recovery-time-ms (document-i64 (:recovery-time-ms observation))
+   :stale-source-count (document-i64 (:stale-source-count observation))
+   :dead-letter-count (document-i64 (:dead-letter-count observation))
+   :real-alert-published (document-bool false)))
+
+(defn resilience-checkpoint
+  [current-state :document expected-version :i64 transition :document] :document
+  (let [next-state
+        (document-map
+         :schema-version (document-string "cofog-0220-resilience-state/v1")
+         :version (document-i64 (+ expected-version 1))
+         :previous-state-hash (document-string (document-sha256 current-state))
+         :previous-state current-state
+         :transition transition)]
+    (document-map
+     :effect (document-keyword :storage-cas-put)
+     :key (document-keyword :cofog-0220-state)
+     :expected-version (document-i64 expected-version)
+     :next-state next-state)))
+
+(defn safe-boundary [] [:ref :cofog.civil-resilience/BoundaryEvidence]
+  (->BoundaryEvidence false false false false false false false false))
+
+(defn main [] :i64
+  (let [assessment
+        (assess-area
+         (->AreaAssessmentRequest "UA" "UA-30" 1000 5000 3 2 2 1 1
+                                  "fixture-source-set-hash" (safe-boundary)))
+        unsafe
+        (assess-area
+         (->AreaAssessmentRequest
+          "UA" "UA-30" 1000 5000 3 2 2 0 0 "unsafe"
+          (->BoundaryEvidence false true true true true true false false)))
+        bundle
+        (prepare-offline-bundle
+         (->OfflineBundleRequest (:outcome assessment) (:assessment assessment)
+                                 "bundle-1" 1000 4000 1500
+                                 "approval-1" "approval-2" "hash-1" "hash-2"
+                                 true true))
+        routes
+        (propose-route-plan
+         (->RoutePlanRequest (:outcome assessment) 1500 4000 3 2 2 true 0))
+        drill
+        (drill-observation (->DrillObservation 10 9 5 5 20 19 30000 1 0))
+        checkpoint (resilience-checkpoint (document-null) 0 bundle)]
+    (if (and (= (:outcome assessment) 1)
+             (= (:outcome unsafe) 3)
+             (= (:reasons unsafe) 62)
+             (> (document-count bundle) 0)
+             (> (document-count routes) 0)
+             (> (document-count drill) 0)
+             (> (document-count checkpoint) 0))
+      42
+      0)))
